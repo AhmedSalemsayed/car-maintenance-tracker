@@ -1,0 +1,29 @@
+:root {
+  --base-color: #dee2e6; /* use your base color */
+}
+
+@keyframes rotationBack {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes rotationBackReverse {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-rotationBack {
+  animation: rotationBack 3s linear infinite;
+}
+
+.animate-rotationBackReverse {
+  animation: rotationBackReverse 4s linear infinite;
+}
