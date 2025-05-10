@@ -4,6 +4,23 @@
 
 body {
   font-family: Arial, Helvetica, sans-serif;
+  ::-webkit-scrollbar-track {
+    background: #f5f5f5;
+    border-radius: 20px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #979696;
+    border-radius: 20px;
+    height: 20px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #888;
+  }
+
+  ::-webkit-scrollbar {
+    width: 5px;
+    height: 20px;
+  }
 }
 
 @layer base {
@@ -84,5 +101,21 @@ body {
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+@layer components {
+  .spinner-mini {
+    margin: 0;
+    width: 20px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 2px solid rgb(94, 91, 91);
+    border-right-color: transparent;
+    animation: rotate 1s infinite linear;
+  }
+  @keyframes rotate {
+    to {
+      transform: rotate(1turn);
+    }
   }
 }

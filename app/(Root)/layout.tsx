@@ -19,12 +19,12 @@ export default async function layout({
     >
       <AppSidebar />
       <MobileHeader />
-      <Suspense fallback={<Loading />}>
-        <main className="bg-[#f5f5f5] w-full h-screen flex flex-col justify-center  items-center p-2 ">
+      <main className="bg-[#ebedef] relative w-full h-screen flex flex-col justify-center gap-1 items-center p-2 md:pt-12 font-Roboto">
+        <Suspense fallback={<Loading />}>
           <Header />
           {children}
-        </main>
-      </Suspense>
+        </Suspense>
+      </main>
     </SidebarProvider>
   );
 }

@@ -74,3 +74,7 @@ export default {
   },
   plugins: [require("tailwindcss-animate")],
 } satisfies Config;
+// #9c27b0
+// #26a69a
+// #6200ea
+// #ffb300
