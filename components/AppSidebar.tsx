@@ -21,12 +21,12 @@ export async function AppSidebar() {
 
       <SidebarContent className="flex flex-col justify-start pt-4">
         <TooltipProvider>
-          <NavLink icon={<Home />} title="Home" href="/" />
+          <NavLink icon={<Home />} title="Home" href="/" exact={true} />
           <NavLink icon={<Car />} title="Cars" href="/cars" />
         </TooltipProvider>
       </SidebarContent>
 
-      <SidebarTrigger className="ml-2 rounded-none text-sidebar-foreground hover:bg-[#C5BAFF]  hover:text-white transition-all m-0 p-2 w-full" />
+      <SidebarTrigger className="ml-2 rounded-none text-sidebar-foreground hover:bg-[--btn-hover-bg-color]  hover:text-white transition-all m-0 p-2 w-full" />
     </Sidebar>
   );
 }

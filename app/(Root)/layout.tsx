@@ -5,6 +5,8 @@ import { Suspense } from "react";
 import Loading from "./loading";
 import MobileHeader from "@/components/MobileHeader";
 import Header from "@/components/Header";
+import { Toaster } from "@/components/ui/sonner";
+
 export default async function layout({
   children,
 }: {
@@ -19,11 +21,12 @@ export default async function layout({
     >
       <AppSidebar />
       <MobileHeader />
-      <main className="bg-[#ebedef] relative w-full h-screen flex flex-col justify-center gap-1 items-center p-2 md:pt-12 font-Roboto">
+      <main className="bg-[#fafbfd] relative w-full h-screen flex flex-col justify-center gap-1 items-center p-2 md:pt-12 font-Roboto overflow-auto">
         <Suspense fallback={<Loading />}>
           <Header />
           {children}
         </Suspense>
+        <Toaster richColors />
       </main>
     </SidebarProvider>
   );

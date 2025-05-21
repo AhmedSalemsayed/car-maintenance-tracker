@@ -67,3 +67,65 @@ export async function deleteCar(carId: number, imageName: string) {
   if (deleteError) console.error("error deleting the car", deleteError.message);
   revalidatePath("/cars");
 }
+
+export async function addNewMaintenance({
+  newMaintenance,
+  carId,
+}: {
+  newMaintenance: {
+    name: string;
+    date: string;
+    brand: string;
+    price: string;
+    kilometrageBeforeMaintenance: number;
+    kilometrageNextMaintenance: number;
+  };
+  carId: string;
+}) {
+  const supabase = await createClerkSupabaseClient();
+
+  const { data: Maintenance } = await supabase
+    .from("cars")
+    .select("Maintenance");
+  const MaintenanceData = Maintenance?.at(0).Maintenance;
+  const filteredMaintenanceData = MaintenanceData.filter(
+    //this is every Maintenance Item like Brake Pads  object etc...
+    (item) => item.name === newMaintenance.name
+  ).at(0);
+  // remove name property from newMaintenance object
+  const { name, ...Maintenanceitem } = newMaintenance;
+  filteredMaintenanceData.historyLog.push(Maintenanceitem);
+  const finalData = MaintenanceData.map((item) =>
+    item.name === filteredMaintenanceData.name ? filteredMaintenanceData : item
+  );
+  const { data, error } = await supabase
+    .from("cars")
+    .update({
+      Maintenance: finalData,
+    })
+    .eq("carId", carId)
+    .select();
+
+  if (error) {
+    console.error("Error adding new maintenance", error.message);
+  } else {
+    revalidatePath("/cars/" + carId);
+  }
+}
+
+export async function updateKiloMetrage(newKilometrage: number, carId: string) {
+  const supabase = await createClerkSupabaseClient();
+  const { data, error } = await supabase
+    .from("cars")
+    .update({
+      currentKilometrage: newKilometrage,
+    })
+    .eq("carId", carId)
+    .select();
+
+  if (error) {
+    console.error("Error adding new maintenance", error.message);
+  } else {
+    revalidatePath("/cars/" + carId);
+  }
+}

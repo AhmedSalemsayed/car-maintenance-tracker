@@ -9,9 +9,9 @@ body {
     border-radius: 20px;
   }
   ::-webkit-scrollbar-thumb {
-    background: #979696;
+    background: #e4e1e1;
     border-radius: 20px;
-    height: 20px;
+    height: 5px;
   }
   ::-webkit-scrollbar-thumb:hover {
     background: #888;
@@ -19,7 +19,7 @@ body {
 
   ::-webkit-scrollbar {
     width: 5px;
-    height: 20px;
+    height: 5px;
   }
 }
 
@@ -58,6 +58,8 @@ body {
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+    --btn-bg-color: #7f55b1;
+    --btn-hover-bg-color: #9b7ebd;
   }
   .dark {
     --background: 0 0% 3.9%;
@@ -78,7 +80,7 @@ body {
     --destructive-foreground: 0 0% 98%;
     --border: 0 0% 14.9%;
     --input: 0 0% 14.9%;
-    --ring: 0 0% 83.1%;
+    --ring: #7f55b1;
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
@@ -117,5 +119,8 @@ body {
     to {
       transform: rotate(1turn);
     }
+  }
+  .btn-primary {
+    @apply px-4 py-2 rounded-lg font-medium text-white  bg-[--btn-bg-color] hover:bg-[--btn-hover-bg-color] transition;
   }
 }

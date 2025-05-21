@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import { Luckiest_Guy, Roboto } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
-import { Suspense } from "react";
-import LoadingGear from "@/components/loadingGear";
+
 export const LuckiestGuy = Luckiest_Guy({
   variable: "--font-luckiest-guy",
   subsets: ["latin"],
@@ -26,16 +25,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
-      <html lang="en">
-        <Suspense fallback={<LoadingGear />}>
-          <body
-            className={`${roboto.variable} ${LuckiestGuy.variable} antialiased max-w-[1440px] m-auto`}
-          >
-            {children}
-          </body>
-        </Suspense>
-      </html>
-    </ClerkProvider>
+    <html lang="en">
+      <ClerkProvider>
+        <body
+          className={`${roboto.variable} ${LuckiestGuy.variable} antialiased max-w-[1440px] m-auto`}
+        >
+          {children}
+        </body>
+      </ClerkProvider>
+    </html>
   );
 }

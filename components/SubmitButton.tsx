@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 import SpinnerMini from "@/components/SpinnerMini";
 
 export default function SubmitButton({
@@ -8,7 +8,11 @@ export default function SubmitButton({
   isSubmitting: boolean;
 }) {
   return (
-    <Button type="submit" disabled={isSubmitting}>
+    <button
+      type="submit"
+      disabled={isSubmitting}
+      className="w-full btn-primary tracking-wide inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-lg font-Roboto font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:text-slate-900"
+    >
       {isSubmitting ? (
         <>
           <SpinnerMini />
@@ -17,6 +21,6 @@ export default function SubmitButton({
       ) : (
         "Save"
       )}
-    </Button>
+    </button>
   );
 }

@@ -14,6 +14,16 @@ export const newCarSchema = z.object({
   carImage: any(),
 });
 
+export const AddNewMaintenanceSchema = z.object({
+  date: z.any(),
+  brand: z.string().min(1, { message: "must be at least 1 character long" }),
+  price: z.string().min(1, { message: "must be at least 1 character long" }),
+  kilometrageBeforeMaintenance: z.number().int().positive(),
+  kilometrageNextMaintenance: z.number().int().positive(),
+});
+
+export type AddNewMaintenance = z.infer<typeof AddNewMaintenanceSchema>;
+
 export type NewCarType = z.infer<typeof newCarSchema>;
 
 export type car = {
@@ -41,4 +51,20 @@ export type MaintenanceItem = {
   changeEvery: number;
   currentKilometrage: number;
   historyLog: Log[];
+};
+
+export type ActionsDropDownProps = {
+  rowData: {
+    name: string;
+    class: string;
+    changeEvery: number;
+    currentKilometrage: number;
+    historyLog: {
+      date: string;
+      brand: string;
+      price: string;
+      kilometrageBeforeMaintenance: number;
+      kilometrageNextMaintenance: number;
+    }[];
+  };
 };

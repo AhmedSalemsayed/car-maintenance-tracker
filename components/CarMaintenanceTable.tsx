@@ -1,13 +1,19 @@
 "use client";
 
+import { useMediaQuery } from "usehooks-ts";
 import { columns } from "./Columns";
 import DataTable from "./DataTable";
 
 export default function CarMaintenanceTable({ maintainanceData }) {
-  //media query logic here to display card or table
+  //media query logic here to display card in small screens or table in large screens
+  const isNotMobile = useMediaQuery("(min-width: 745px)");
   return (
-    <div>
-      <DataTable columns={columns} data={maintainanceData} />
-    </div>
+    <>
+      {isNotMobile ? (
+        <DataTable columns={columns} data={maintainanceData} />
+      ) : (
+        <p>Mobile view</p>
+      )}
+    </>
   );
 }

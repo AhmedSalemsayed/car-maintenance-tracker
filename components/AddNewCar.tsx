@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import { HandleAddNewCar } from "@/lib/serverUtils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 import { ErrorMessage } from "@hookform/error-message";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -103,7 +103,6 @@ function AddNewCarForm({ className, setOpen }: AddNewCarFormProps) {
   const onSubmit = (data: NewCarType) => {
     return new Promise((resolve) => {
       HandleAddNewCar(data).then(() => {
-        console.log(isSubmitting);
         setOpen(false);
       });
     });

@@ -11,13 +11,13 @@ const MobileLink = ({
   title,
   href,
 }: {
-  icon: any;
+  icon: React.ReactNode;
   title: string;
   href: string;
 }) => {
   return (
     <Link href={href} className="p-2 ">
-      <SheetTrigger className=" flex items-center w-full gap-4 font-medium pl-[0.3rem] hover:bg-[#C5BAFF] hover:text-white hover:font-semibold transition-all">
+      <SheetTrigger className=" flex items-center w-full gap-4 font-medium pl-[0.3rem]  hover:bg-[--btn-hover-bg-color] hover:text-white hover:font-semibold transition-all">
         {icon}
         <span className="font-Roboto">{title}</span>
       </SheetTrigger>
@@ -29,14 +29,19 @@ export default function NavLink({
   icon,
   title,
   href,
+  exact = false,
 }: {
-  icon: any;
+  icon: React.ReactNode;
   title: string;
   href: string;
+  exact?: boolean;
 }) {
   const { isMobile, state } = useSidebar();
   const pathName = usePathname();
-  const active = pathName === href;
+
+  const isActive = exact
+    ? pathName === href
+    : pathName === href || pathName.startsWith(`${href}/`);
   return (
     <>
       {isMobile ? (
@@ -46,8 +51,8 @@ export default function NavLink({
           <TooltipTrigger>
             <Link
               href={href}
-              className={`flex items-center gap-4 p-2 font-semibold hover:bg-[#C5BAFF] ${
-                active && "bg-[#7949FF] text-white "
+              className={`flex items-center gap-4 p-2 font-semibold hover:bg-[--btn-hover-bg-color] ${
+                isActive && "bg-[--btn-bg-color] text-white "
               }  hover:text-white hover:font-bold transition-all`}
             >
               <span className="ml-1">{icon}</span>
@@ -61,8 +66,8 @@ export default function NavLink({
       ) : (
         <Link
           href={href}
-          className={`flex items-center gap-4 p-2 font-semibold hover:bg-[#C5BAFF] hover:text-white hover:font-bold transition-all ${
-            active && "bg-[#7949FF] text-white "
+          className={`flex items-center gap-4 p-2 font-medium hover:bg-[--btn-hover-bg-color] hover:text-white  transition-all ${
+            isActive && "bg-[--btn-bg-color] text-white "
           } `}
         >
           <span className="ml-1">{icon}</span>

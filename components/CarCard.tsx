@@ -1,7 +1,6 @@
 "use client";
-import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardDescription,
@@ -51,10 +50,10 @@ export default function CarCard({ className, car, ...props }: CardProps) {
       <CardFooter>
         <Button
           asChild
-          className="bg-[#E9E1ff] text-[#7949ff] text-sm w-8/12"
+          className="bg-[--btn-bg-color] hover:bg-[--btn-hover-bg-color] font-medium text-sm w-8/12"
           disabled={isDeleting}
         >
-          <Link href={`/${car.carId}`}>View</Link>
+          <Link href={`cars/${car.carId}`}>View</Link>
         </Button>
         <div className="flex gap-2 text-muted-foreground">
           <Share2 />
@@ -62,7 +61,7 @@ export default function CarCard({ className, car, ...props }: CardProps) {
             disabled={isDeleting}
             onClick={() => {
               setIsDeleting(true);
-              deleteCar(car?.carId, carImageName).then(() => {
+              deleteCar(car?.carId, carImageName!).then(() => {
                 setIsDeleting(false);
               });
             }}

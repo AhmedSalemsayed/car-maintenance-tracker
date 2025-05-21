@@ -2,7 +2,8 @@
 
 import { MaintenanceItem } from "@/lib/zodSchemas";
 import { ColumnDef } from "@tanstack/react-table";
-import { stat } from "fs";
+import { ActionsDropDown } from "./ActionsDropDown";
+import StatusPill from "./StatusPill";
 
 export const columns: ColumnDef<MaintenanceItem>[] = [
   {
@@ -17,12 +18,22 @@ export const columns: ColumnDef<MaintenanceItem>[] = [
   },
   {
     accessorKey: "KilometrageBeforeMaintenance",
-    accessorFn: (row) => row.historyLog.at(-1)?.kilometrageBeforeMaintenance,
+    accessorFn: (row) =>
+      new Intl.NumberFormat().format(
+        row.historyLog.at(-1)?.kilometrageBeforeMaintenance!
+      ),
     header: "Kilometrage Before Maintenance (Km)",
   },
   {
+    header: "Change Every (Km)",
+    accessorFn: (row) => new Intl.NumberFormat().format(row.changeEvery),
+  },
+  {
     accessorKey: "KilometrageOfNextMaintenance",
-    accessorFn: (row) => row.historyLog.at(-1)?.kilometrageNextMaintenance,
+    accessorFn: (row) =>
+      new Intl.NumberFormat().format(
+        row.historyLog.at(-1)?.kilometrageNextMaintenance!
+      ),
     header: "Kilometrage of Next Maintenance (Km)",
   },
   {
@@ -35,30 +46,49 @@ export const columns: ColumnDef<MaintenanceItem>[] = [
     accessorFn: (row) => row.historyLog.at(-1)?.price,
     header: "Price",
   },
-  //   {
-  //     accessorKey: "KilometrageOfNextMaintenance",
-  //     header: "Kilometrage of Next Maintenance",
-  //   },
   {
     accessorKey: "KilometrageRemainingTillNextMaintenance",
     accessorFn: (row) => {
       const currentKilometrage = row.currentKilometrage;
       const kilometrageOfNextMaintenance =
         row.historyLog.at(-1)?.kilometrageNextMaintenance;
-      return kilometrageOfNextMaintenance! - currentKilometrage;
+
+      return new Intl.NumberFormat().format(
+        kilometrageOfNextMaintenance! - currentKilometrage
+      );
     },
-    header: "Kilometrage Remaining Till Next Maintenance",
+    header: "Kilometrage Remaining Till Next Maintenance (Km)",
   },
   {
+    header: "Status",
     accessorKey: "status",
-    accessorFn: (row) => {
-      const currentKilometrage = row.currentKilometrage;
+    cell: (obj) => {
+      const currentKilometrage = obj.row.original.currentKilometrage;
       const kilometrageOfNextMaintenance =
-        row.historyLog.at(-1)?.kilometrageNextMaintenance;
+        obj.row.original.historyLog?.at(-1)?.kilometrageNextMaintenance;
       const difference = kilometrageOfNextMaintenance! - currentKilometrage;
       const status = difference > 0 ? "Good" : "Bad";
-      return status;
+
+      return (
+        <>
+          {status === "Good" ? (
+            <StatusPill className=" border border-[#188038] text-[#188038] bg-[#e6f4ea]  ">
+              {status}
+            </StatusPill>
+          ) : (
+            <StatusPill className=" text-red-400 bg-red-800 animate-pulse font-semibold">
+              {status}
+            </StatusPill>
+          )}
+        </>
+      );
     },
-    header: "Status",
+  },
+  {
+    header: "Actions",
+    cell: (obj) => {
+      const rowData = obj.row.original;
+      return <ActionsDropDown rowData={rowData} />;
+    },
   },
 ];
