@@ -1,10 +1,9 @@
 import { useEffect } from "react";
 import {
-  ActionsDropDownProps,
+  rowData,
   AddNewMaintenance,
   AddNewMaintenanceSchema,
 } from "@/lib/zodSchemas";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Form, FormField } from "./ui/form";
@@ -14,10 +13,15 @@ import { addNewMaintenance } from "@/lib/serverUtils";
 import { useParams } from "next/navigation";
 import SubmitButton from "./SubmitButton";
 import { toast } from "sonner";
+
+interface AddNewMaintenanceProps extends rowData {
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
 export default function AddNewMaintenaceForm({
   rowData,
   setOpen,
-}: ActionsDropDownProps) {
+}: AddNewMaintenanceProps) {
   const { carId }: { carId: string } = useParams();
   const form = useForm<AddNewMaintenance>({
     resolver: zodResolver(AddNewMaintenanceSchema),
@@ -44,21 +48,19 @@ export default function AddNewMaintenaceForm({
       date: formattedDate,
       name: rowData.name,
     };
-    await addNewMaintenance({ newMaintenance, carId });
-    setOpen(false);
-    toast.success("Maintenance added successfully", {
-      duration: 4000,
-      closeButton: true,
+    await addNewMaintenance({ newMaintenance, carId }).then(() => {
+      setOpen(false);
+      toast.success("Maintenance added successfully", {
+        duration: 4000,
+        closeButton: true,
+      });
     });
   }
 
-  const onError = (errors) => {
-    console.log("❌ Validation errors", errors);
-  };
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(onSubmit, onError)}
+        onSubmit={form.handleSubmit(onSubmit)}
         className={`space-y-4 w-full `}
       >
         <FormField
@@ -70,7 +72,7 @@ export default function AddNewMaintenaceForm({
           control={form.control}
           name="kilometrageBeforeMaintenance"
           render={({ field }) => (
-            <CustomFormField
+            <CustomFormField<AddNewMaintenance>
               field={field}
               label="Kilometrage Before Maintenance"
               placeholder="Enter Kilometrage Before Maintenance"

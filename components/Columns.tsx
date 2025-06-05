@@ -13,15 +13,26 @@ export const columns: ColumnDef<MaintenanceItem>[] = [
   },
   {
     accessorKey: "DateOfLastMaintenance",
-    accessorFn: (row) => row.historyLog.at(-1)?.date,
+    accessorFn: (row) => {
+      if (!row.historyLog || row.historyLog.length === 0) {
+        return "N/A";
+      } else {
+        return row.historyLog.at(-1)?.date;
+      }
+    },
     header: "Date of Last Maintenance",
   },
   {
     accessorKey: "KilometrageBeforeMaintenance",
-    accessorFn: (row) =>
-      new Intl.NumberFormat().format(
-        row.historyLog.at(-1)?.kilometrageBeforeMaintenance!
-      ),
+    accessorFn: (row) => {
+      if (!row.historyLog || row.historyLog.length === 0) {
+        return "------";
+      } else {
+        return new Intl.NumberFormat().format(
+          row.historyLog.at(-1)?.kilometrageBeforeMaintenance!
+        );
+      }
+    },
     header: "Kilometrage Before Maintenance (Km)",
   },
   {
@@ -30,32 +41,53 @@ export const columns: ColumnDef<MaintenanceItem>[] = [
   },
   {
     accessorKey: "KilometrageOfNextMaintenance",
-    accessorFn: (row) =>
-      new Intl.NumberFormat().format(
-        row.historyLog.at(-1)?.kilometrageNextMaintenance!
-      ),
+    accessorFn: (row) => {
+      if (!row.historyLog || row.historyLog.length === 0) {
+        return "------";
+      } else {
+        return new Intl.NumberFormat().format(
+          row.historyLog.at(-1)?.kilometrageNextMaintenance!
+        );
+      }
+    },
     header: "Kilometrage of Next Maintenance (Km)",
   },
   {
     accessorKey: "brand",
-    accessorFn: (row) => row.historyLog.at(-1)?.brand,
+    accessorFn: (row) => {
+      if (!row.historyLog || row.historyLog.length === 0) {
+        return "------";
+      } else {
+        return row.historyLog.at(-1)?.brand;
+      }
+    },
     header: "Brand",
   },
   {
     accessorKey: "price",
-    accessorFn: (row) => row.historyLog.at(-1)?.price,
+    accessorFn: (row) => {
+      if (!row.historyLog || row.historyLog.length === 0) {
+        return "------";
+      } else {
+        return row.historyLog.at(-1)?.price;
+      }
+    },
     header: "Price",
   },
   {
     accessorKey: "KilometrageRemainingTillNextMaintenance",
     accessorFn: (row) => {
-      const currentKilometrage = row.currentKilometrage;
-      const kilometrageOfNextMaintenance =
-        row.historyLog.at(-1)?.kilometrageNextMaintenance;
+      if (!row.historyLog || row.historyLog.length === 0) {
+        return "------";
+      } else {
+        const currentKilometrage = row.currentKilometrage;
+        const kilometrageOfNextMaintenance =
+          row.historyLog.at(-1)?.kilometrageNextMaintenance;
 
-      return new Intl.NumberFormat().format(
-        kilometrageOfNextMaintenance! - currentKilometrage
-      );
+        return new Intl.NumberFormat().format(
+          kilometrageOfNextMaintenance! - currentKilometrage
+        );
+      }
     },
     header: "Kilometrage Remaining Till Next Maintenance (Km)",
   },

@@ -1,6 +1,7 @@
 import MissedMaintenance from "@/components/MissedMaintenance";
 import UpcomingMaintenance from "@/components/UpcomingMaintenance";
-export const metadata = {
+import { Metadata } from "next";
+export const metadata: Metadata = {
   title: "RoboCar  | Home",
   description:
     "RoboCare is a maintenance management system for cars. It helps you keep track of your cars maintenance schedules and alerts you when maintenance is due.",

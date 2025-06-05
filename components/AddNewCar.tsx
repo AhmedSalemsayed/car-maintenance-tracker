@@ -1,16 +1,7 @@
 "use client";
-import * as React from "react";
-
 import { useMediaQuery } from "usehooks-ts";
 import { Plus } from "lucide-react";
-import { useForm } from "react-hook-form";
-import { HandleAddNewCar } from "@/lib/serverUtils";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { ErrorMessage } from "@hookform/error-message";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import {
   Dialog,
   DialogContent,
@@ -29,20 +20,18 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
+import AddNewCarForm from "./AddNewCarForm";
+import { useState } from "react";
 
-import SubmitButton from "./SubmitButton";
-import { newCarSchema, NewCarType } from "@/lib/zodSchemas";
-import { carBrands } from "@/lib/constants";
-
-export default function DrawerDialogDemo() {
-  const [open, setOpen] = React.useState(false);
+export default function AddNewCar() {
+  const [open, setOpen] = useState(false);
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
   if (isDesktop) {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button>
+          <Button className="text-md">
             <Plus />
             <span>Add A New Car</span>
           </Button>
@@ -75,7 +64,7 @@ export default function DrawerDialogDemo() {
             Add Car Details here. Click save when you&apos;re done.
           </DrawerDescription>
         </DrawerHeader>
-        <AddNewCarForm className="px-4" setOpen={setOpen} />
+        <AddNewCarForm />
         <DrawerFooter className="pt-2">
           <DrawerClose asChild>
             <Button variant="outline">Cancel</Button>
@@ -86,145 +75,128 @@ export default function DrawerDialogDemo() {
   );
 }
 
-interface AddNewCarFormProps extends React.ComponentProps<"form"> {
-  className?: string;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}
+// interface AddNewCarFormProps extends React.ComponentProps<"form"> {
+//   className?: string;
+//   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+// }
 
-function AddNewCarForm({ className, setOpen }: AddNewCarFormProps) {
-  const {
-    register,
-    formState: { errors, isSubmitting },
-    handleSubmit,
-  } = useForm<NewCarType>({
-    resolver: zodResolver(newCarSchema),
-  });
+//   return (
+//     <form
+//       className={cn("grid items-start gap-4 overflow-auto", className)}
+//       onSubmit={handleSubmit(onSubmit)}
+//     >
+//       <div className="grid gap-2">
+//         <Label htmlFor="chassisNumber">Chassis Number</Label>
+//         <Input
+//           {...register("chassisNumber")}
+//           type="text"
+//           name="chassisNumber"
+//           id="chassisNumber"
+//           placeholder="Your Car Chassis Number"
+//         />
+//       </div>
+//       <ErrorMessage
+//         errors={errors}
+//         name="chassisNumber"
+//         render={({ message }) => (
+//           <p className="text-red-500 text-sm">{message}</p>
+//         )}
+//       />
 
-  const onSubmit = (data: NewCarType) => {
-    return new Promise((resolve) => {
-      HandleAddNewCar(data).then(() => {
-        setOpen(false);
-      });
-    });
-  };
+//       <div className="grid gap-2">
+//         <Label htmlFor="brand">Brand</Label>
+//         <Input
+//           {...register("brand")}
+//           type="text"
+//           name="brand"
+//           id="brand"
+//           placeholder="Your Car Brand"
+//         />
+//         {
+//           <datalist id="brand">
+//             {carBrands.map((brand) => (
+//               <option value={brand} key={brand} />
+//             ))}
+//           </datalist>
+//         }
+//       </div>
 
-  return (
-    <form
-      className={cn("grid items-start gap-4 overflow-auto", className)}
-      onSubmit={handleSubmit(onSubmit)}
-    >
-      <div className="grid gap-2">
-        <Label htmlFor="chassisNumber">Chassis Number</Label>
-        <Input
-          {...register("chassisNumber")}
-          type="text"
-          name="chassisNumber"
-          id="chassisNumber"
-          placeholder="Your Car Chassis Number"
-        />
-      </div>
-      <ErrorMessage
-        errors={errors}
-        name="chassisNumber"
-        render={({ message }) => (
-          <p className="text-red-500 text-sm">{message}</p>
-        )}
-      />
-
-      <div className="grid gap-2">
-        <Label htmlFor="brand">Brand</Label>
-        <Input
-          {...register("brand")}
-          type="text"
-          name="brand"
-          id="brand"
-          placeholder="Your Car Brand"
-        />
-        {
-          <datalist id="brand">
-            {carBrands.map((brand) => (
-              <option value={brand} key={brand} />
-            ))}
-          </datalist>
-        }
-      </div>
-
-      <ErrorMessage
-        errors={errors}
-        name="brand"
-        render={({ message }) => (
-          <p className="text-red-500 text-sm">{message}</p>
-        )}
-      />
-      <div className="grid gap-2">
-        <Label htmlFor="model">Model</Label>
-        <Input
-          {...register("model")}
-          type="text"
-          name="model"
-          id="model"
-          placeholder="Your Car Model"
-        />
-      </div>
-      <ErrorMessage
-        errors={errors}
-        name="model"
-        render={({ message }) => (
-          <p className="text-red-500 text-sm">{message}</p>
-        )}
-      />
-      <div className="grid gap-2">
-        <Label htmlFor="year">Year of Manufacture</Label>
-        <Input
-          {...register("year")}
-          type="text"
-          name="year"
-          id="year"
-          placeholder="Your Car Model"
-        />
-      </div>
-      <ErrorMessage
-        errors={errors}
-        name="year"
-        render={({ message }) => (
-          <p className="text-red-500 text-sm">{message}</p>
-        )}
-      />
-      <div className="grid gap-2">
-        <Label htmlFor="color">Color</Label>
-        <Input
-          {...register("color")}
-          type="text"
-          name="color"
-          id="color"
-          placeholder="Your Car Color"
-        />
-      </div>
-      <ErrorMessage
-        errors={errors}
-        name="color"
-        render={({ message }) => (
-          <p className="text-red-500 text-sm">{message}</p>
-        )}
-      />
-      <div className="grid gap-2">
-        <Label htmlFor="carImage">Upload Car Image</Label>
-        <Input
-          {...register("carImage")}
-          type="file"
-          name="carImage"
-          id="carImage"
-          className="file:mr-4 file:py-1 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-[#E9E1ff] file:text-[#7949ff] hover:file:bg-[#7949ff] hover:file:text-white transition-colors duration-300"
-        />
-      </div>
-      <ErrorMessage
-        errors={errors}
-        name="carImage"
-        render={({ message }) => (
-          <p className="text-red-500 text-sm">{message}</p>
-        )}
-      />
-      <SubmitButton isSubmitting={isSubmitting} />
-    </form>
-  );
-}
+//       <ErrorMessage
+//         errors={errors}
+//         name="brand"
+//         render={({ message }) => (
+//           <p className="text-red-500 text-sm">{message}</p>
+//         )}
+//       />
+//       <div className="grid gap-2">
+//         <Label htmlFor="model">Model</Label>
+//         <Input
+//           {...register("model")}
+//           type="text"
+//           name="model"
+//           id="model"
+//           placeholder="Your Car Model"
+//         />
+//       </div>
+//       <ErrorMessage
+//         errors={errors}
+//         name="model"
+//         render={({ message }) => (
+//           <p className="text-red-500 text-sm">{message}</p>
+//         )}
+//       />
+//       <div className="grid gap-2">
+//         <Label htmlFor="year">Year of Manufacture</Label>
+//         <Input
+//           {...register("year")}
+//           type="text"
+//           name="year"
+//           id="year"
+//           placeholder="Your Car Model"
+//         />
+//       </div>
+//       <ErrorMessage
+//         errors={errors}
+//         name="year"
+//         render={({ message }) => (
+//           <p className="text-red-500 text-sm">{message}</p>
+//         )}
+//       />
+//       <div className="grid gap-2">
+//         <Label htmlFor="color">Color</Label>
+//         <Input
+//           {...register("color")}
+//           type="text"
+//           name="color"
+//           id="color"
+//           placeholder="Your Car Color"
+//         />
+//       </div>
+//       <ErrorMessage
+//         errors={errors}
+//         name="color"
+//         render={({ message }) => (
+//           <p className="text-red-500 text-sm">{message}</p>
+//         )}
+//       />
+//       <div className="grid gap-2">
+//         <Label htmlFor="carImage">Upload Car Image</Label>
+//         <Input
+//           {...register("carImage")}
+//           type="file"
+//           name="carImage"
+//           id="carImage"
+//           className="file:mr-4 file:py-1 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-[#E9E1ff] file:text-[#7949ff] hover:file:bg-[#7949ff] hover:file:text-white transition-colors duration-300"
+//         />
+//       </div>
+//       <ErrorMessage
+//         errors={errors}
+//         name="carImage"
+//         render={({ message }) => (
+//           <p className="text-red-500 text-sm">{message}</p>
+//         )}
+//       />
+//       <SubmitButton isSubmitting={isSubmitting} />
+//     </form>
+//   );
+// }

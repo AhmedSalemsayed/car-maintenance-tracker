@@ -11,6 +11,7 @@ export const newCarSchema = z.object({
     .min(4, { message: "must be at least 4 character long" })
     .max(4, { message: "must be at most 4 character long" }),
   color: z.string().min(1, { message: "must be at least 1 character long" }),
+  currentKilometrage: z.number().int().positive(),
   carImage: any(),
 });
 
@@ -35,6 +36,7 @@ export type car = {
   color: string;
   carImage: string;
   currentKilometrage: number;
+  Maintenance: MaintenanceItem[];
 };
 
 export type Log = {
@@ -53,7 +55,7 @@ export type MaintenanceItem = {
   historyLog: Log[];
 };
 
-export type ActionsDropDownProps = {
+export type rowData = {
   rowData: {
     name: string;
     class: string;

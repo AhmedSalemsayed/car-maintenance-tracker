@@ -12,8 +12,20 @@ import Image from "next/image";
 import Link from "next/link";
 import { Share2, Trash2 } from "lucide-react";
 import { deleteCar } from "@/lib/serverUtils";
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import SpinnerMini from "./SpinnerMini";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { toast } from "sonner";
 
 type CardProps = React.ComponentProps<typeof Card> & {
   car: {
@@ -28,7 +40,18 @@ type CardProps = React.ComponentProps<typeof Card> & {
 
 export default function CarCard({ className, car, ...props }: CardProps) {
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const carImageName = car.carImage.split("/").at(-1);
+
+  const handleDelete = async (e) => {
+    e.preventDefault(); // to prevent radix from closing the dialog before the async operation completes
+    setIsDeleting(true);
+    await deleteCar(car?.carId, carImageName!);
+    setIsDeleting(false);
+    setIsOpen(false);
+    toast.success("Car deleted successfully");
+  };
+
   return (
     <Card className={cn("p-2 w-[223px] h-[340px]", className)} {...props}>
       <div className="relative aspect-square ">
@@ -57,25 +80,62 @@ export default function CarCard({ className, car, ...props }: CardProps) {
         </Button>
         <div className="flex gap-2 text-muted-foreground">
           <Share2 />
-          <button
-            disabled={isDeleting}
-            onClick={() => {
-              setIsDeleting(true);
-              deleteCar(car?.carId, carImageName!).then(() => {
-                setIsDeleting(false);
-              });
-            }}
-          >
-            {isDeleting ? (
-              <>
-                <SpinnerMini />
-              </>
-            ) : (
+
+          <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
+            <AlertDialogTrigger>
               <Trash2 />
-            )}
-          </button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This action cannot be undone. This will permanently delete
+                  your car profile and remove your data from our servers.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction asChild>
+                  <Button
+                    className="bg-red-600 text-white hover:bg-red-700"
+                    onClick={handleDelete}
+                    disabled={isDeleting}
+                  >
+                    {" "}
+                    {isDeleting ? (
+                      <>
+                        <SpinnerMini />
+                      </>
+                    ) : (
+                      "Continue"
+                    )}
+                  </Button>
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
       </CardFooter>
     </Card>
   );
 }
+
+// <button
+//   disabled={isDeleting}
+//   onClick={() => {
+//     setIsDeleting(true);
+//     deleteCar(car?.carId, carImageName!).then(() => {
+//       setIsDeleting(false);
+//     });
+//   }}
+// >
+// {
+//   isDeleting ? (
+//     <>
+//       <SpinnerMini />
+//     </>
+//   ) : (
+//     <Trash2 />
+//   );
+// }
+// </button>;

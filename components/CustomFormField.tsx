@@ -6,22 +6,23 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { ControllerRenderProps } from "react-hook-form";
-import { AddNewMaintenance } from "@/lib/zodSchemas";
+import { ControllerRenderProps, FieldValues } from "react-hook-form";
 
-type CustomFormFieldProps = {
-  field: ControllerRenderProps<AddNewMaintenance>;
+type CustomFormFieldProps<T extends FieldValues> = {
+  field: ControllerRenderProps<T>;
   label: string;
-  placeholder: string;
+  placeholder?: string;
   type?: string;
 };
 
-export default function CustomFormField({
+export default function CustomFormField<T extends FieldValues>({
   field,
   label,
   placeholder,
   type = "text",
-}: CustomFormFieldProps) {
+}: CustomFormFieldProps<T>) {
+  const isFileInput = type === "file";
+  const isDisabled = label === "Kilometrage of  Next Maintenance";
   return (
     <FormItem>
       <FormLabel>{label}</FormLabel>
@@ -29,24 +30,27 @@ export default function CustomFormField({
         <Input
           type={type}
           placeholder={placeholder}
-          {...field}
+          {...(isFileInput ? {} : { value: field.value })}
+          ref={field.ref}
+          name={field.name}
+          onBlur={field.onBlur}
           onChange={(e) => {
             if (type === "number") {
               field.onChange(Number(e.target.value));
+            } else if (type === "file") {
+              field.onChange(e.target.files);
             } else {
               field.onChange(e.target.value);
             }
           }}
-          disabled={label === "Kilometrage of  Next Maintenance" ? true : false}
+          disabled={isDisabled}
         />
       </FormControl>
-      {label === "Kilometrage of  Next Maintenance" ? (
+      {isDisabled && (
         <FormDescription>
           This Field is Calculated Based on ChangeEvery, If You Want To Change
           It, Please Change the ChangeEvery Field.
         </FormDescription>
-      ) : (
-        false
       )}
       <FormMessage />
     </FormItem>

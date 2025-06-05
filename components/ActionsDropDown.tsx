@@ -8,7 +8,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { SlOptionsVertical } from "react-icons/sl";
-import { MdEdit } from "react-icons/md";
+import { MdEdit, MdDelete, MdEditNote } from "react-icons/md";
+import { AiFillEdit } from "react-icons/ai";
 import { IoMdAdd } from "react-icons/io";
 import { FaHistory } from "react-icons/fa";
 
@@ -21,11 +22,15 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import AddNewMaintenaceForm from "./AddNewMaintenaceForm";
-import { ActionsDropDownProps } from "@/lib/zodSchemas";
-
-export function ActionsDropDown({ rowData }: ActionsDropDownProps) {
+import EditLastMaintenaceForm from "./EditLastMaintenanceForm";
+import RemoveLastMaintenance from "./RemoveLastMaintenance";
+import { rowData } from "@/lib/zodSchemas";
+import UpdateChangeEveryForm from "./UpdateChangeEveryForm";
+export function ActionsDropDown({ rowData }: rowData) {
   const [open, setOpen] = useState(false);
-  const [mode, setMode] = useState<"add" | "edit">("add");
+  const [mode, setMode] = useState<
+    "add" | "edit" | "remove" | "viewHistory" | "changeEvery"
+  >("add");
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -44,9 +49,21 @@ export function ActionsDropDown({ rowData }: ActionsDropDownProps) {
               <MdEdit />
               Edit Last Maintenance
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setMode("edit")}>
+            <DropdownMenuItem
+              className="text-[13px]"
+              onClick={() => setMode("remove")}
+            >
+              <MdDelete />
+              Remove Last Maintenance
+            </DropdownMenuItem>
+
+            <DropdownMenuItem onClick={() => setMode("viewHistory")}>
               <FaHistory />
               View History
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setMode("changeEvery")}>
+              <AiFillEdit />
+              Update Change Every
             </DropdownMenuItem>
           </DialogTrigger>
         </DropdownMenuContent>
@@ -55,24 +72,33 @@ export function ActionsDropDown({ rowData }: ActionsDropDownProps) {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
-            {mode === "edit"
-              ? `Edit Last ${rowData.name} Maintenance`
-              : `Add New ${rowData.name} Maintenance`}
+            {mode === "edit" && `Edit Last ${rowData.name} Maintenance`}
+            {mode === "add" && `Add New ${rowData.name} Maintenance`}
+            {mode === "remove" && `Remove Last ${rowData.name} Maintenance`}
+            {mode === "changeEvery" &&
+              `Update ${rowData.name} Change Every Value`}
+            {mode === "viewHistory" &&
+              `View ${rowData.name} Maintenance History`}
           </DialogTitle>
           <DialogDescription>
-            {mode === "edit"
-              ? "Modify user data below."
-              : "Enter the new Maintenance data."}
+            {mode === "edit" && "Modify Maintenance Data below."}
+            {mode === "add" && "Enter the new Maintenance data."}
+            {mode === "viewHistory" && "View the history of this maintenance."}
           </DialogDescription>
         </DialogHeader>
 
-        {mode === "edit" ? (
-          <div>
-            <p>Form to edit</p>
-            {/* Add real form here */}
-          </div>
-        ) : (
+        {mode === "changeEvery" && (
+          <UpdateChangeEveryForm rowData={rowData} setOpen={setOpen} />
+        )}
+        {mode === "edit" && (
+          <EditLastMaintenaceForm rowData={rowData} setOpen={setOpen} />
+        )}
+        {mode === "add" && (
           <AddNewMaintenaceForm rowData={rowData} setOpen={setOpen} />
+        )}
+
+        {mode == "remove" && (
+          <RemoveLastMaintenance rowData={rowData} setOpen={setOpen} />
         )}
       </DialogContent>
     </Dialog>

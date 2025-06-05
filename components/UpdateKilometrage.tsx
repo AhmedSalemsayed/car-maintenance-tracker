@@ -16,8 +16,12 @@ import { useParams } from "next/navigation";
 
 export default function UpdateKilometrage({
   carKilometrage,
+  isOpen,
+  setIsOpen,
 }: {
   carKilometrage: number;
+  isOpen: boolean;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const { carId }: { carId: string } = useParams();
   const form = useForm({
@@ -28,21 +32,23 @@ export default function UpdateKilometrage({
 
   async function onSubmit(value: { currentKilometrage: number }) {
     const newKilometrage = Number(value.currentKilometrage);
-    await updateKiloMetrage(newKilometrage, carId);
-    toast.success("Kilometrage updated successfully", {
-      duration: 4000,
-      closeButton: true,
+    await updateKiloMetrage(newKilometrage, carId).then(() => {
+      setIsOpen(false);
+      toast.success("Kilometrage updated successfully", {
+        duration: 4000,
+        closeButton: true,
+      });
     });
   }
   function onError(value: { currentKilometrage: number }) {
     console.log(value);
   }
   return (
-    <Popover>
+    <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger className="btn-primary text-lg">
         Update Kilometrage
       </PopoverTrigger>
-      <PopoverContent>
+      <PopoverContent side="right">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit, onError)}>
             <FormField
