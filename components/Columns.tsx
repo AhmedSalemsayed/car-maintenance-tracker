@@ -17,7 +17,9 @@ export const columns: ColumnDef<MaintenanceItem>[] = [
       if (!row.historyLog || row.historyLog.length === 0) {
         return "N/A";
       } else {
-        return row.historyLog.at(-1)?.date;
+        return new Date(row?.historyLog?.at(-1)?.date).toLocaleDateString(
+          "en-GB"
+        );
       }
     },
     header: "Date of Last Maintenance",

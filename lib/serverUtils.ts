@@ -182,6 +182,21 @@ export async function deleteLastMaintenance(name: string, carId: string) {
   }
 }
 
+export async function editLastMaintenance(
+  carId: string,
+  newMaintenance: {
+    name: string;
+    date: string;
+    brand: string;
+    price: string;
+    kilometrageBeforeMaintenance: number;
+    kilometrageNextMaintenance: number;
+  }
+) {
+  await deleteLastMaintenance(newMaintenance.name, carId);
+  await addNewMaintenance({ newMaintenance, carId });
+}
+
 export async function updateChangeEvery(
   name: string,
   carId: string,
@@ -241,4 +256,30 @@ export async function updateKiloMetrage(newKilometrage: number, carId: string) {
   } else {
     revalidatePath("/cars/" + carId);
   }
+}
+export async function getLatestMaintenance(
+  carId: string,
+  maintenanceName: string
+) {
+  const supabase = await createClerkSupabaseClient();
+  const { data: Maintenance } = await supabase
+    .from("cars")
+    .select("Maintenance")
+    .eq("carId", carId);
+
+  const MaintenanceItems: MaintenanceItem[] = Maintenance?.at(0).Maintenance;
+
+  const filteredMaintenanceItem = MaintenanceItems.filter(
+    (item: MaintenanceItem) => item.name === maintenanceName
+  ).at(0);
+
+  if (
+    !filteredMaintenanceItem ||
+    filteredMaintenanceItem.historyLog.length === 0
+  )
+    return null;
+
+  const latestMaintenance = filteredMaintenanceItem.historyLog.at(-1);
+
+  return latestMaintenance;
 }

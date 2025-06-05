@@ -42,10 +42,9 @@ export default function AddNewMaintenaceForm({
   }, [KmAfterMaintenance, form]);
 
   async function onSubmit(values: AddNewMaintenance) {
-    const formattedDate = new Date(values.date).toLocaleDateString("en-GB");
     const newMaintenance = {
       ...values,
-      date: formattedDate,
+      date: values.date,
       name: rowData.name,
     };
     await addNewMaintenance({ newMaintenance, carId }).then(() => {
