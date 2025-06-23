@@ -1,6 +1,9 @@
 import LoadingGear from "@/components/loadingGear";
-import React from "react";
 
 export default function Loading() {
-  return <LoadingGear />;
+  return (
+    <div className="w-full h-full flex justify-center items-center">
+      <LoadingGear />;
+    </div>
+  );
 }

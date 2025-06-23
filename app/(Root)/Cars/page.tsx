@@ -11,7 +11,7 @@ export default async function page() {
   const supabase = await createClerkSupabaseClient();
   const { data } = await supabase.from("cars").select("*");
   return (
-    <section className=" flex gap-4 flex-col  md:pt-4 p-1 h-full w-full  overflow-auto">
+    <section className=" flex gap-3 flex-col p-1 h-full w-full  overflow-auto ">
       {data?.length ? (
         <div className="flex justify-end items-center">
           <AddNewCar />

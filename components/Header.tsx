@@ -6,7 +6,7 @@ import { SignedIn, UserButton } from "@clerk/nextjs";
 
 export default function Header() {
   return (
-    <header className="bg-white absolute w-[99%] top-2  gap-2  p-1 justify-between shadow-lg rounded-sm hidden md:flex">
+    <header className="bg-white w-full gap-2 mt-2  p-1 justify-between shadow-md rounded-sm hidden md:flex">
       <WelcomeHeader />
       <div className="flex gap-2">
         <div className="flex gap-1 text-xs items-center cursor-pointer">

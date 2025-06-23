@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 body {
+  height: 100dvh;
   font-family: Arial, Helvetica, sans-serif;
   ::-webkit-scrollbar-track {
     background: #f5f5f5;

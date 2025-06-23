@@ -101,16 +101,27 @@ export const columns: ColumnDef<MaintenanceItem>[] = [
       const kilometrageOfNextMaintenance =
         obj.row.original.historyLog?.at(-1)?.kilometrageNextMaintenance;
       const difference = kilometrageOfNextMaintenance! - currentKilometrage;
-      const status = difference > 0 ? "Good" : "Bad";
+      const status =
+        difference > 0 && difference <= 1000
+          ? "Upcoming"
+          : difference > 0
+          ? "Good"
+          : "Bad";
 
       return (
         <>
-          {status === "Good" ? (
+          {status === "Good" && (
             <StatusPill className=" border border-[#188038] text-[#188038] bg-[#e6f4ea]  ">
               {status}
             </StatusPill>
-          ) : (
+          )}
+          {status === "Bad" && (
             <StatusPill className=" text-red-400 bg-red-800 animate-pulse font-semibold">
+              {status}
+            </StatusPill>
+          )}
+          {status === "Upcoming" && (
+            <StatusPill className=" border border-[#ece934] text-[#656014] bg-[#faf881]  ">
               {status}
             </StatusPill>
           )}

@@ -28,6 +28,7 @@ export default function CustomFormField<T extends FieldValues>({
       <FormLabel>{label}</FormLabel>
       <FormControl>
         <Input
+          className="file:rounded-full file:mr-20 file:border-0 file:bg-violet-50 file:px-4 file:py-1 file:cursor-pointer file:text-sm file:font-semibold file:text-violet-700"
           type={type}
           placeholder={placeholder}
           {...(isFileInput ? {} : { value: field.value })}

@@ -32,13 +32,19 @@ export default function UpdateKilometrage({
 
   async function onSubmit(value: { currentKilometrage: number }) {
     const newKilometrage = Number(value.currentKilometrage);
-    await updateKiloMetrage(newKilometrage, carId).then(() => {
-      setIsOpen(false);
-      toast.success("Kilometrage updated successfully", {
-        duration: 4000,
-        closeButton: true,
+    try {
+      await updateKiloMetrage(newKilometrage, carId).then(() => {
+        setIsOpen(false);
+        toast.success("Kilometrage updated successfully", {
+          duration: 4000,
+          closeButton: true,
+        });
       });
-    });
+    } catch (error) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      }
+    }
   }
   function onError(value: { currentKilometrage: number }) {
     console.log(value);

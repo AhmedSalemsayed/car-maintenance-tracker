@@ -11,7 +11,7 @@ import { TooltipProvider } from "./ui/tooltip";
 
 export async function AppSidebar() {
   return (
-    <Sidebar variant="sidebar" collapsible="icon">
+    <Sidebar variant="sidebar" collapsible="icon" className="bg-white">
       <SidebarHeader className="flex flex-row gap-1 items-center overflow-hidden">
         <Image src="/logo.png" alt="logo" width={35} height={35} />
         <span className="font-LuckiestGuy tracking-wide text-black md:text-2xl md:ml-3">

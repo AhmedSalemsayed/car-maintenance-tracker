@@ -35,7 +35,7 @@ export default function AddNewMaintenaceForm({
   });
 
   const KmBeforeMaintenance = form.watch("kilometrageBeforeMaintenance");
-  const KmAfterMaintenance = KmBeforeMaintenance + rowData.changeEvery;
+  const KmAfterMaintenance = KmBeforeMaintenance + Number(rowData.changeEvery);
 
   useEffect(() => {
     form.setValue("kilometrageNextMaintenance", KmAfterMaintenance);

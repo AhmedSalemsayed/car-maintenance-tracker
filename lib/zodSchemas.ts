@@ -70,3 +70,15 @@ export type rowData = {
     }[];
   };
 };
+export type UpcomingMaintenanceData = [
+  carId: string,
+  brand: string,
+  model: string,
+  Maintenance: MaintenanceItem[]
+];
+export type MissedMaintenanceData = [
+  carId: string,
+  brand: string,
+  model: string,
+  Maintenance: MaintenanceItem[]
+];

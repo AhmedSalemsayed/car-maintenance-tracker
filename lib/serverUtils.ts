@@ -252,7 +252,7 @@ export async function updateKiloMetrage(newKilometrage: number, carId: string) {
     .select();
 
   if (error) {
-    console.error("Error adding new maintenance", error.message);
+    throw new Error("Error updating new kilometrage");
   } else {
     revalidatePath("/cars/" + carId);
   }
