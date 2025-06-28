@@ -14,7 +14,8 @@ import { useParams } from "next/navigation";
 import SubmitButton from "./SubmitButton";
 import { toast } from "sonner";
 
-interface AddNewMaintenanceProps extends rowData {
+interface AddNewMaintenanceProps {
+  rowData: rowData;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 

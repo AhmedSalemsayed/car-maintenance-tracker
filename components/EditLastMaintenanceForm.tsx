@@ -16,7 +16,8 @@ import { editLastMaintenance, getLatestMaintenance } from "@/lib/serverUtils";
 import SkeletonForm from "./SkeletonForm";
 import { toast } from "sonner";
 
-interface EditLastMaintenanceProps extends rowData {
+interface EditLastMaintenanceProps {
+  rowData: rowData;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 export default function EditLastMaintenanceForm({
@@ -29,6 +30,8 @@ export default function EditLastMaintenanceForm({
   const form = useForm<AddNewMaintenance>({
     resolver: zodResolver(AddNewMaintenanceSchema),
   });
+  const KmBeforeMaintenance = form.watch("kilometrageBeforeMaintenance");
+  const KmAfterMaintenance = KmBeforeMaintenance + Number(rowData.changeEvery);
   // to populate the form fields with th last maintenance values
   useEffect(() => {
     async function loadData() {
@@ -39,6 +42,9 @@ export default function EditLastMaintenanceForm({
 
     loadData();
   }, [form.reset, carId, rowData.name, form, rowData.currentKilometrage]);
+  useEffect(() => {
+    form.setValue("kilometrageNextMaintenance", KmAfterMaintenance);
+  }, [KmAfterMaintenance, form]);
 
   if (isLoading) return <SkeletonForm />;
 

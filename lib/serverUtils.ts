@@ -18,27 +18,166 @@ export async function HandleAddNewCar(formData: NewCarType) {
   formData.Maintenance = [
     {
       name: "Brake Pads",
-      class: "brake-pads",
-      changeEvery: 30000,
-      currentKilometrage: formData.currentKilometrage,
+      class: "Braking System",
       historyLog: [],
-    },
-    {
-      name: "Oil Change",
-      class: "oil-change",
       changeEvery: 10000,
       currentKilometrage: formData.currentKilometrage,
-      historyLog: [],
     },
     {
-      name: "Tires",
-      class: "tires",
-      changeEvery: 50000,
-      currentKilometrage: formData.currentKilometrage,
+      name: "Brakes Master Cylinder",
+      class: "Braking System",
       historyLog: [],
+      changeEvery: 10000,
+      currentKilometrage: formData.currentKilometrage,
+    },
+    {
+      name: "Brake Fluid",
+      class: "Braking System",
+      historyLog: [],
+      changeEvery: 10000,
+      currentKilometrage: formData.currentKilometrage,
+    },
+    {
+      name: "Brake Rotors",
+      class: "Braking System",
+      historyLog: [],
+      changeEvery: 10000,
+      currentKilometrage: formData.currentKilometrage,
+    },
+    {
+      name: "Brake Boosters",
+      class: "Braking System",
+      historyLog: [],
+      changeEvery: 10000,
+      currentKilometrage: formData.currentKilometrage,
+    },
+    {
+      name: "Shock Absorbers",
+      class: "Suspension System",
+      historyLog: [],
+      changeEvery: 10000,
+      currentKilometrage: formData.currentKilometrage,
+    },
+    {
+      name: "Coil Springs",
+      class: "Suspension System",
+      historyLog: [],
+      changeEvery: 10000,
+      currentKilometrage: formData.currentKilometrage,
+    },
+    {
+      name: "Ball Joints",
+      class: "Suspension System",
+      historyLog: [],
+      changeEvery: 10000,
+      currentKilometrage: formData.currentKilometrage,
+    },
+    {
+      name: "Bushings",
+      class: "Suspension System",
+      historyLog: [],
+      changeEvery: 10000,
+      currentKilometrage: formData.currentKilometrage,
+    },
+    {
+      name: "Transmission Fluid",
+      class: "Transmission System",
+      historyLog: [],
+      changeEvery: 10000,
+      currentKilometrage: formData.currentKilometrage,
+    },
+    {
+      name: "Clutch Bearing",
+      class: "Transmission System",
+      historyLog: [],
+      changeEvery: 10000,
+      currentKilometrage: formData.currentKilometrage,
+    },
+    {
+      name: "Pressure Plate",
+      class: "Transmission System",
+      historyLog: [],
+      changeEvery: 10000,
+      currentKilometrage: formData.currentKilometrage,
+    },
+    {
+      name: "Clutch Disc",
+      class: "Transmission System",
+      historyLog: [],
+      changeEvery: 10000,
+      currentKilometrage: formData.currentKilometrage,
+    },
+    {
+      name: "Axles",
+      class: "Transmission System",
+      historyLog: [],
+      changeEvery: 10000,
+      currentKilometrage: formData.currentKilometrage,
+    },
+    {
+      name: "Engine Oil",
+      class: "Engine System",
+      historyLog: [],
+      changeEvery: 10000,
+      currentKilometrage: formData.currentKilometrage,
+    },
+    {
+      name: "Engine Oil filter",
+      class: "Engine System",
+      historyLog: [],
+      changeEvery: 10000,
+      currentKilometrage: formData.currentKilometrage,
+    },
+    {
+      name: "Fuel filter",
+      class: "Engine System",
+      historyLog: [],
+      changeEvery: 10000,
+      currentKilometrage: formData.currentKilometrage,
+    },
+    {
+      name: "Spark Plugs",
+      class: "Engine System",
+      historyLog: [],
+      changeEvery: 10000,
+      currentKilometrage: formData.currentKilometrage,
+    },
+    {
+      name: "Timing Belt",
+      class: "Engine System",
+      historyLog: [],
+      changeEvery: 60000,
+      currentKilometrage: formData.currentKilometrage,
+    },
+    {
+      name: "Serpentine Belt",
+      class: "Engine System",
+      historyLog: [],
+      changeEvery: 60000,
+      currentKilometrage: formData.currentKilometrage,
+    },
+    {
+      name: "Cabin Air Filter",
+      class: "Air Conditioning System",
+      historyLog: [],
+      changeEvery: 60000,
+      currentKilometrage: formData.currentKilometrage,
+    },
+    {
+      name: "Freon",
+      class: "Air Conditioning System",
+      historyLog: [],
+      changeEvery: 60000,
+      currentKilometrage: formData.currentKilometrage,
+    },
+    {
+      name: "AC Compressor",
+      class: "Air Conditioning System",
+      historyLog: [],
+      changeEvery: 60000,
+      currentKilometrage: formData.currentKilometrage,
     },
   ];
-  console.log(formData);
   //Add the new car to the database
   const { data, error } = await supabase
     .from("cars")
@@ -50,7 +189,6 @@ export async function HandleAddNewCar(formData: NewCarType) {
     return;
   } else {
     console.log("Car added successfully:");
-    console.log(data);
   }
 
   //upload car image to supabase storage bucket
@@ -114,6 +252,8 @@ export async function addNewMaintenance({
 
   const { data: Maintenance } = await supabase
     .from("cars")
+    .select("*")
+    .eq("carId", carId)
     .select("Maintenance");
   const MaintenanceData = Maintenance?.at(0).Maintenance;
   const filteredMaintenanceItem = MaintenanceData.filter(
@@ -145,8 +285,9 @@ export async function deleteLastMaintenance(name: string, carId: string) {
   const supabase = await createClerkSupabaseClient();
   const { data: Maintenance } = await supabase
     .from("cars")
+    .select("*")
+    .eq("carId", carId)
     .select("Maintenance");
-
   const MaintenanceItems: MaintenanceItem[] = Maintenance?.at(0).Maintenance;
 
   const filteredMaintenanceItem = MaintenanceItems.filter(
@@ -195,6 +336,7 @@ export async function editLastMaintenance(
 ) {
   await deleteLastMaintenance(newMaintenance.name, carId);
   await addNewMaintenance({ newMaintenance, carId });
+  revalidatePath("/cars/" + carId);
 }
 
 export async function updateChangeEvery(
@@ -205,6 +347,8 @@ export async function updateChangeEvery(
   const supabase = await createClerkSupabaseClient();
   const { data: Maintenance } = await supabase
     .from("cars")
+    .select("*")
+    .eq("carId", carId)
     .select("Maintenance");
 
   const MaintenanceItems: MaintenanceItem[] = Maintenance?.at(0).Maintenance;

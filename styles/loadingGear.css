@@ -1,7 +1,9 @@
 :root {
   --base-color: #dee2e6; /* use your base color */
 }
-
+.dark {
+  --base-color: #121212; /* dark mode base color */
+}
 @keyframes rotationBack {
   0% {
     transform: rotate(0deg);

@@ -10,6 +10,10 @@ export const columns: ColumnDef<MaintenanceItem>[] = [
     accessorKey: "name",
     accessorFn: (row) => row.name,
     header: "Maintenance Item",
+    filterFn: (row, columnId, filterValue) =>
+      (row.getValue(columnId) as string)
+        .toLowerCase()
+        .includes(filterValue.toLowerCase()),
   },
   {
     accessorKey: "DateOfLastMaintenance",
@@ -74,7 +78,7 @@ export const columns: ColumnDef<MaintenanceItem>[] = [
         return row.historyLog.at(-1)?.price;
       }
     },
-    header: "Price",
+    header: "Price (EGP)",
   },
   {
     accessorKey: "KilometrageRemainingTillNextMaintenance",
@@ -106,6 +110,8 @@ export const columns: ColumnDef<MaintenanceItem>[] = [
           ? "Upcoming"
           : difference > 0
           ? "Good"
+          : obj.row.original.historyLog?.length === 0
+          ? "Unknown"
           : "Bad";
 
       return (
@@ -125,9 +131,15 @@ export const columns: ColumnDef<MaintenanceItem>[] = [
               {status}
             </StatusPill>
           )}
+          {status === "Unknown" && (
+            <StatusPill className=" border border-[#787877] text-[#202020] bg-[#c9c9c6]  ">
+              {status}
+            </StatusPill>
+          )}
         </>
       );
     },
+    filterFn: "equals",
   },
   {
     header: "Actions",

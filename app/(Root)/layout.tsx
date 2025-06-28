@@ -19,7 +19,7 @@ export default async function layout({
     >
       <AppSidebar />
       <MobileHeader />
-      <main className="bg-[#fafbfd] relative w-full h-full min-h-dvh  flex flex-col  gap-4  p-1 font-Roboto overflow-auto">
+      <main className="bg-[#fafbfd] dark:bg-[#121212] relative w-full h-full min-h-dvh  flex flex-col  justify-between  gap-4  p-1 font-Roboto overflow-auto transition-all duration-500">
         <Header />
         {children}
         <Toaster richColors />

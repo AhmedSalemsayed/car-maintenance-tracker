@@ -12,9 +12,9 @@ import { TooltipProvider } from "./ui/tooltip";
 export async function AppSidebar() {
   return (
     <Sidebar variant="sidebar" collapsible="icon" className="bg-white">
-      <SidebarHeader className="flex flex-row gap-1 items-center overflow-hidden">
+      <SidebarHeader className="flex flex-row gap-1 items-center overflow-hidden pt-3">
         <Image src="/logo.png" alt="logo" width={35} height={35} />
-        <span className="font-LuckiestGuy tracking-wide text-black md:text-2xl md:ml-3">
+        <span className="font-LuckiestGuy dark:text-white tracking-wide text-black md:text-2xl md:ml-3">
           RoboCar
         </span>
       </SidebarHeader>

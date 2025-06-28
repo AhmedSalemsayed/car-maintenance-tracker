@@ -7,7 +7,8 @@ import { toast } from "sonner";
 import { useState } from "react";
 import SpinnerMini from "./SpinnerMini";
 
-interface RemoveLastMaintenanceProps extends rowData {
+interface RemoveLastMaintenanceProps {
+  rowData: rowData;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 

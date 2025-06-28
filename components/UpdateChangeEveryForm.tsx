@@ -8,7 +8,8 @@ import { useParams } from "next/navigation";
 import { updateChangeEvery } from "@/lib/serverUtils";
 import { toast } from "sonner";
 
-interface UpdateChangeEveryFormProps extends rowData {
+interface UpdateChangeEveryFormProps {
+  rowData: rowData;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 

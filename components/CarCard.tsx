@@ -53,7 +53,10 @@ export default function CarCard({ className, car, ...props }: CardProps) {
   };
 
   return (
-    <Card className={cn("p-2 w-[223px] h-[340px]", className)} {...props}>
+    <Card
+      className={cn("p-2 w-[223px] h-[340px] dark:bg-[#1e1e1e]", className)}
+      {...props}
+    >
       <div className="relative aspect-square ">
         <Image
           src={car?.carImage}
@@ -94,7 +97,9 @@ export default function CarCard({ className, car, ...props }: CardProps) {
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogCancel className="dark:bg-black dark:hover:bg-gray-800">
+                  Cancel
+                </AlertDialogCancel>
                 <AlertDialogAction asChild>
                   <Button
                     className="bg-red-600 text-white hover:bg-red-700"

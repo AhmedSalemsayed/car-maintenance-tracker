@@ -31,7 +31,7 @@ export default function AddNewCarForm({ setOpen }) {
   return (
     <Form {...form}>
       <form
-        className={`space-y-1 w-full`}
+        className={`space-y-2 w-full`}
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <FormField

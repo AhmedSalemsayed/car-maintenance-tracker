@@ -21,14 +21,14 @@ export default function CarInfo({ car }: { car: car }) {
         <div className="flex flex-col gap-1 md:gap-3 p-2">
           <h2 className="text-lg font-semibold md:text-2xl">{car?.brand}</h2>
           <p className="text-sm text-gray-500 space-x-2 capitalize md:text-lg">
-            <span>{car?.model}</span>
-            <span>{car?.year}</span>
+            <span className="dark:text-[#b4b2b2]">{car?.model}</span>
+            <span className="dark:text-[#b4b2b2]">{car?.year}</span>
           </p>
-          <p className="text-sm text-gray-500 capitalize  md:text-lg">
+          <p className="text-sm text-gray-500 capitalize dark:text-[#b4b2b2] md:text-lg">
             {car?.color}
           </p>
         </div>
-        <div className="flex flex-col justify-center items-center font-semibold text-gray-700  text-2xl md:text-3xl tracking-wider flex-auto gap-2 ">
+        <div className="flex flex-col justify-center items-center font-semibold text-gray-700 dark:text-[#b4b2b2] text-2xl md:text-3xl tracking-wider flex-auto gap-2 ">
           <CountUp
             end={car?.currentKilometrage}
             duration={2.75}

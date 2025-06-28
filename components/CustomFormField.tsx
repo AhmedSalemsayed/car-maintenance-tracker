@@ -24,7 +24,7 @@ export default function CustomFormField<T extends FieldValues>({
   const isFileInput = type === "file";
   const isDisabled = label === "Kilometrage of  Next Maintenance";
   return (
-    <FormItem>
+    <FormItem className="lg:text-xs">
       <FormLabel>{label}</FormLabel>
       <FormControl>
         <Input

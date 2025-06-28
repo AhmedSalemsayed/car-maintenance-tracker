@@ -8,7 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { SlOptionsVertical } from "react-icons/sl";
-import { MdEdit, MdDelete, MdEditNote } from "react-icons/md";
+import { MdEdit, MdDelete } from "react-icons/md";
 import { AiFillEdit } from "react-icons/ai";
 import { IoMdAdd } from "react-icons/io";
 import { FaHistory } from "react-icons/fa";
@@ -26,7 +26,7 @@ import EditLastMaintenaceForm from "./EditLastMaintenanceForm";
 import RemoveLastMaintenance from "./RemoveLastMaintenance";
 import { rowData } from "@/lib/zodSchemas";
 import UpdateChangeEveryForm from "./UpdateChangeEveryForm";
-export function ActionsDropDown({ rowData }: rowData) {
+export function ActionsDropDown({ rowData }: { rowData: rowData }) {
   const [open, setOpen] = useState(false);
   const [mode, setMode] = useState<
     "add" | "edit" | "remove" | "viewHistory" | "changeEvery"
@@ -45,19 +45,25 @@ export function ActionsDropDown({ rowData }: rowData) {
               Add New Maintenance
             </DropdownMenuItem>
 
-            <DropdownMenuItem onClick={() => setMode("edit")}>
+            <DropdownMenuItem
+              className="disabled:cursor-not-allowed"
+              onClick={() => setMode("edit")}
+            >
               <MdEdit />
               Edit Last Maintenance
             </DropdownMenuItem>
             <DropdownMenuItem
-              className="text-[13px]"
+              className="disabled:cursor-not-allowed text-[13px]"
               onClick={() => setMode("remove")}
             >
               <MdDelete />
               Remove Last Maintenance
             </DropdownMenuItem>
 
-            <DropdownMenuItem onClick={() => setMode("viewHistory")}>
+            <DropdownMenuItem
+              className="disabled:cursor-not-allowed"
+              onClick={() => setMode("viewHistory")}
+            >
               <FaHistory />
               View History
             </DropdownMenuItem>

@@ -31,7 +31,7 @@ export default async function Page({ params }: Props) {
   const car: car = data?.at(0);
   const maintainanceData = car?.Maintenance;
   return (
-    <section className="flex flex-col flex-1 gap-2 p-1 md:pt-4  w-full ">
+    <section className="flex flex-col flex-1 gap-2 p-1  md:pt-0 w-full ">
       <Suspense fallback={<CarInfoLoadingSkeleton />}>
         <CarInfo car={car} />
       </Suspense>
