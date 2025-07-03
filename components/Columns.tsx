@@ -21,9 +21,10 @@ export const columns: ColumnDef<MaintenanceItem>[] = [
       if (!row.historyLog || row.historyLog.length === 0) {
         return "N/A";
       } else {
-        return new Date(row?.historyLog?.at(-1)?.date).toLocaleDateString(
-          "en-GB"
-        );
+        const date = row?.historyLog?.at(-1)?.date;
+        return date
+          ? new Date(date).toLocaleDateString("en-GB")
+          : "Invalid Date";
       }
     },
     header: "Date of Last Maintenance",
@@ -35,7 +36,7 @@ export const columns: ColumnDef<MaintenanceItem>[] = [
         return "------";
       } else {
         return new Intl.NumberFormat().format(
-          row.historyLog.at(-1)?.kilometrageBeforeMaintenance!
+          row.historyLog.at(-1)?.kilometrageBeforeMaintenance ?? 0
         );
       }
     },
@@ -52,7 +53,7 @@ export const columns: ColumnDef<MaintenanceItem>[] = [
         return "------";
       } else {
         return new Intl.NumberFormat().format(
-          row.historyLog.at(-1)?.kilometrageNextMaintenance!
+          row.historyLog.at(-1)?.kilometrageNextMaintenance ?? 0
         );
       }
     },

@@ -56,7 +56,7 @@ export default function EditLastMaintenanceForm({
     };
     await editLastMaintenance(carId, newMaintenance);
     setOpen(false);
-    toast.success(`${rowData.name} Maintenance Edited successfully`, {
+    toast.success(`${rowData.name} Maintenance Edited Successfully`, {
       duration: 4000,
       closeButton: true,
     });

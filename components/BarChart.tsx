@@ -34,23 +34,20 @@ const BarChart = ({ MaintenanceData }: { MaintenanceData: car[] }) => {
     "rgba(54, 162, 235, 0.6)", // blue
   ];
   const data = {
-    labels: MaintenanceData?.at(-1).Maintenance.map(
+    labels: MaintenanceData?.at(-1)?.Maintenance.map(
       (item: MaintenanceItem) => item.name
     ),
     datasets: MaintenanceData?.map((car: car, i) => {
       return {
         label: car.brand + " " + car.model,
         data: car.Maintenance.map((item: MaintenanceItem) => {
+          const kilometrageNextMaintenance =
+            item?.historyLog?.at(-1)?.kilometrageNextMaintenance ?? 0;
           if (item.historyLog.length === 0) return 0;
-          if (
-            item.historyLog.at(-1)?.kilometrageNextMaintenance -
-              item.currentKilometrage <=
-            0
-          )
+          if (kilometrageNextMaintenance - item.currentKilometrage <= 0)
             return 0;
           return Math.round(
-            ((item.historyLog.at(-1)?.kilometrageNextMaintenance -
-              item.currentKilometrage) /
+            ((kilometrageNextMaintenance - item.currentKilometrage) /
               Number(item.changeEvery)) *
               100
           );
@@ -75,7 +72,7 @@ const BarChart = ({ MaintenanceData }: { MaintenanceData: car[] }) => {
         beginAtZero: true,
         ticks: {
           stepSize: 10,
-          callback: (value) => value + " %",
+          callback: (value: number | string) => value + " %",
         },
       },
       x: {

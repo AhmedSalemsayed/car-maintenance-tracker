@@ -12,7 +12,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Share2, Trash2 } from "lucide-react";
 import { deleteCar } from "@/lib/serverUtils";
-import { useState, useTransition } from "react";
+import { useState } from "react";
 import SpinnerMini from "./SpinnerMini";
 import {
   AlertDialog,
@@ -43,7 +43,7 @@ export default function CarCard({ className, car, ...props }: CardProps) {
   const [isOpen, setIsOpen] = useState(false);
   const carImageName = car.carImage.split("/").at(-1);
 
-  const handleDelete = async (e) => {
+  const handleDelete = async (e: React.MouseEvent) => {
     e.preventDefault(); // to prevent radix from closing the dialog before the async operation completes
     setIsDeleting(true);
     await deleteCar(car?.carId, carImageName!);

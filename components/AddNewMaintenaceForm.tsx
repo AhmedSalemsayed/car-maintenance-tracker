@@ -50,7 +50,7 @@ export default function AddNewMaintenaceForm({
     };
     await addNewMaintenance({ newMaintenance, carId }).then(() => {
       setOpen(false);
-      toast.success("Maintenance added successfully", {
+      toast.success(`${rowData.name} Maintenance Added Successfully`, {
         duration: 4000,
         closeButton: true,
       });

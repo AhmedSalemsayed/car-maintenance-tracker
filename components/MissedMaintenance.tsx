@@ -1,5 +1,5 @@
 "use client";
-import { MissedMaintenanceData } from "@/lib/zodSchemas";
+import { MaintenanceItem, MissedMaintenanceData } from "@/lib/zodSchemas";
 import { useSidebar } from "./ui/sidebar";
 
 export default function MissedMaintenance({
@@ -29,7 +29,10 @@ export default function MissedMaintenance({
           </p>
         )}
         {data?.map(([carId, brand, model, Maintenance]) =>
-          Maintenance.map((MaintenanceItem) => {
+          Maintenance.map((MaintenanceItem: MaintenanceItem) => {
+            const kilometrageNextMaintenance =
+              MaintenanceItem?.historyLog?.at(-1)?.kilometrageNextMaintenance ??
+              0;
             return (
               <li
                 className="flex justify-between items-center  p-1 rounded-sm "
@@ -52,8 +55,7 @@ export default function MissedMaintenance({
                   }`}
                 >
                   {(
-                    MaintenanceItem.historyLog.at(-1)
-                      .kilometrageNextMaintenance -
+                    kilometrageNextMaintenance -
                     MaintenanceItem.currentKilometrage
                   ).toLocaleString("en-US")}{" "}
                   &nbsp; KM

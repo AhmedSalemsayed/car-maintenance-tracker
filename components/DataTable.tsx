@@ -7,7 +7,7 @@ import {
   getFilteredRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-
+import type { Row } from "@tanstack/react-table";
 import {
   Table,
   TableBody,
@@ -24,30 +24,24 @@ interface DataTableProps<TData> {
   data: TData[];
 }
 
-const customFilterFn = (row, columnId, filterValue) => {
-  if (!filterValue) return row;
+const customFilterFn = (
+  row: Row<MaintenanceItem>,
+  columnId: string,
+  filterValue: string
+) => {
+  const kilometrageNextMaintenance =
+    row.original.historyLog.at(-1)?.kilometrageNextMaintenance ?? 0;
+  if (!filterValue) return false;
   if (filterValue === "GoodStatus") {
-    return (
-      row.original.historyLog.at(-1)?.kilometrageNextMaintenance -
-        row.original.currentKilometrage >
-      1000
-    );
+    return kilometrageNextMaintenance - row.original.currentKilometrage > 1000;
   }
   if (filterValue === "BadStatus") {
-    return (
-      row.original.historyLog.at(-1)?.kilometrageNextMaintenance -
-        row.original.currentKilometrage <
-      0
-    );
+    return kilometrageNextMaintenance - row.original.currentKilometrage < 0;
   }
   if (filterValue === "UpcomingStatus") {
     return (
-      row.original.historyLog.at(-1)?.kilometrageNextMaintenance -
-        row.original.currentKilometrage >
-        0 &&
-      row.original.historyLog.at(-1)?.kilometrageNextMaintenance -
-        row.original.currentKilometrage <=
-        1000
+      kilometrageNextMaintenance - row.original.currentKilometrage > 0 &&
+      kilometrageNextMaintenance - row.original.currentKilometrage <= 1000
     );
   }
   return row.original.class === filterValue;
@@ -57,7 +51,7 @@ export default function DataTable({
   columns,
   data,
 }: DataTableProps<MaintenanceItem>) {
-  const table = useReactTable({
+  const table = useReactTable<MaintenanceItem>({
     columns,
     data,
     getCoreRowModel: getCoreRowModel(),
@@ -109,9 +103,9 @@ export default function DataTable({
                 {row.getVisibleCells().map((cell, i) => (
                   <TableCell
                     key={cell.id}
-                    className={`border-b border-slate-200  dark:border-gray-700 duration-150 ease-linear dark:bg-[#2d2d2d] dark:text-[#b4b2b2] text-center  ${
+                    className={`border-b border-slate-200 text-xs md:text-sm  dark:border-gray-500 duration-150 ease-linear dark:bg-[#2d2d2d] dark:text-[#b4b2b2] text-center  ${
                       i === 0
-                        ? "sticky left-0  bg-slate-100 text-slate-700 dark:border-slate-800 dark:bg-[#1e1e1e] dark:text-[#b4b2b2]  "
+                        ? "sticky left-0 text-xs md:text-sm bg-slate-100 text-slate-700 dark:border-slate-800 dark:bg-[#1e1e1e] dark:text-[#b4b2b2]  "
                         : ""
                     }`}
                   >
@@ -122,7 +116,10 @@ export default function DataTable({
             ))
           ) : (
             <TableRow>
-              <TableCell colSpan={columns.length} className="h-24 text-center">
+              <TableCell
+                colSpan={columns.length}
+                className="h-72 text-center font-semibold text-lg  dark:bg-[#2d2d2d] dark:text-[#b4b2b2]"
+              >
                 No results.
               </TableCell>
             </TableRow>

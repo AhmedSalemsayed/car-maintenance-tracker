@@ -3,6 +3,7 @@ import BarChart from "@/components/BarChart";
 import MissedMaintenance from "@/components/MissedMaintenance";
 import UpcomingMaintenance from "@/components/UpcomingMaintenance";
 import {
+  car,
   MaintenanceItem,
   MissedMaintenanceData,
   UpcomingMaintenanceData,
@@ -34,35 +35,35 @@ export default async function Home() {
       </div>
     );
   const UpcomingMaintenanceData: UpcomingMaintenanceData[] = cars?.map(
-    (car) => [
+    (car: car) => [
       car.carId,
       car.brand,
       car.model,
       car?.Maintenance.filter((item: MaintenanceItem) => {
+        const kilometrageNextMaintenance =
+          item?.historyLog?.at(-1)?.kilometrageNextMaintenance ?? 0;
         return (
-          item?.historyLog.at(-1)?.kilometrageNextMaintenance -
-            item.currentKilometrage <=
-            1000 &&
-          item?.historyLog.at(-1)?.kilometrageNextMaintenance -
-            item.currentKilometrage >
-            0
+          kilometrageNextMaintenance - item.currentKilometrage <= 1000 &&
+          kilometrageNextMaintenance - item.currentKilometrage > 0
         );
       }),
     ]
   );
 
-  const MissedMaintenanceData: MissedMaintenanceData[] = cars?.map((car) => [
-    car.carId,
-    car.brand,
-    car.model,
-    car?.Maintenance.filter((item: MaintenanceItem) => {
-      return (
-        item.historyLog.at(-1)?.kilometrageNextMaintenance -
-          item.currentKilometrage <=
-        0
-      );
-    }),
-  ]);
+  const MissedMaintenanceData: MissedMaintenanceData[] = cars?.map(
+    (car: car) => [
+      car.carId,
+      car.brand,
+      car.model,
+      car?.Maintenance.filter((item: MaintenanceItem) => {
+        if (!item.historyLog.at(-1)) return false;
+        const kilometrageNextMaintenance =
+          item?.historyLog?.at(-1)?.kilometrageNextMaintenance ?? 0;
+
+        return kilometrageNextMaintenance - item.currentKilometrage <= 0;
+      }),
+    ]
+  );
   return (
     <section className="w-full p-4 md:pt-0  flex flex-col gap-1 transition-all duration-500">
       <motion.div

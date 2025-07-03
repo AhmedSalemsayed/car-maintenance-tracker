@@ -37,6 +37,9 @@ export default function UpcomingMaintenance({
         )}
         {data?.map(([carId, brand, model, Maintenance]) =>
           Maintenance.map((MaintenanceItem) => {
+            const kilometrageNextMaintenance =
+              MaintenanceItem?.historyLog?.at(-1)?.kilometrageNextMaintenance ??
+              0;
             return (
               <li
                 className="flex justify-between items-center  p-1 rounded-sm "
@@ -59,8 +62,7 @@ export default function UpcomingMaintenance({
                   }`}
                 >
                   {(
-                    MaintenanceItem.historyLog.at(-1)
-                      .kilometrageNextMaintenance -
+                    kilometrageNextMaintenance -
                     MaintenanceItem.currentKilometrage
                   ).toLocaleString("en-US")}{" "}
                   &nbsp; KM

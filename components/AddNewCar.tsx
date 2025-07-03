@@ -64,7 +64,7 @@ export default function AddNewCar() {
             Add Car Details here. Click save when you&apos;re done.
           </DrawerDescription>
         </DrawerHeader>
-        <AddNewCarForm />
+        <AddNewCarForm setOpen={setOpen} />
         <DrawerFooter className="pt-2">
           <DrawerClose asChild>
             <Button variant="outline">Cancel</Button>

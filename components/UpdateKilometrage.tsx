@@ -46,9 +46,7 @@ export default function UpdateKilometrage({
       }
     }
   }
-  function onError(value: { currentKilometrage: number }) {
-    console.log(value);
-  }
+
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger className="btn-primary text-lg">
@@ -56,7 +54,7 @@ export default function UpdateKilometrage({
       </PopoverTrigger>
       <PopoverContent side="right">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit, onError)}>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
             <FormField
               name="currentKilometrage"
               control={form.control}

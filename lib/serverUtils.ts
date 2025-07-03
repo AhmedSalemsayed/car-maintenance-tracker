@@ -226,9 +226,7 @@ export async function deleteCar(carId: number, imageName: string) {
     .delete()
     .eq("carId", carId);
 
-  const { data, error } = await supabase.storage
-    .from("car-images")
-    .remove([`${imageName}`]);
+  await supabase.storage.from("car-images").remove([`${imageName}`]);
 
   if (deleteError) console.error("error deleting the car", deleteError.message);
   revalidatePath("/cars");
@@ -255,18 +253,20 @@ export async function addNewMaintenance({
     .select("*")
     .eq("carId", carId)
     .select("Maintenance");
-  const MaintenanceData = Maintenance?.at(0).Maintenance;
+  const MaintenanceData: MaintenanceItem[] =
+    Maintenance?.at(0)?.Maintenance ?? [];
   const filteredMaintenanceItem = MaintenanceData.filter(
     //this is every Maintenance Item like Brake Pads  object etc...
     (item) => item.name === newMaintenance.name
   ).at(0);
   // remove name property from newMaintenance object
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { name, ...Maintenanceitem } = newMaintenance;
-  filteredMaintenanceItem.historyLog.push(Maintenanceitem);
-  const finalData = MaintenanceData.map((item) =>
-    item.name === filteredMaintenanceItem.name ? filteredMaintenanceItem : item
+  filteredMaintenanceItem?.historyLog?.push(Maintenanceitem);
+  const finalData = MaintenanceData.map((item: MaintenanceItem) =>
+    item.name === filteredMaintenanceItem?.name ? filteredMaintenanceItem : item
   );
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from("cars")
     .update({
       Maintenance: finalData,
@@ -275,7 +275,7 @@ export async function addNewMaintenance({
     .select();
 
   if (error) {
-    console.error("Error adding new maintenance", error.message);
+    console.error("Error Adding new maintenance", error.message);
   } else {
     revalidatePath("/cars/" + carId);
   }
@@ -288,18 +288,19 @@ export async function deleteLastMaintenance(name: string, carId: string) {
     .select("*")
     .eq("carId", carId)
     .select("Maintenance");
-  const MaintenanceItems: MaintenanceItem[] = Maintenance?.at(0).Maintenance;
+  const MaintenanceItems: MaintenanceItem[] =
+    Maintenance?.at(0)?.Maintenance ?? [];
 
   const filteredMaintenanceItem = MaintenanceItems.filter(
     //this is every Maintenance Item like Brake Pads  object etc...
     (item: MaintenanceItem) => item.name === name
   ).at(0);
   // remove the last item from the historyLog array
-  if (filteredMaintenanceItem.historyLog.length === 0)
+  if (filteredMaintenanceItem?.historyLog.length === 0)
     throw new Error("No Maintenance History to delete");
-  filteredMaintenanceItem.historyLog.pop();
+  filteredMaintenanceItem?.historyLog.pop();
   const finalData = MaintenanceItems.map((item: MaintenanceItem) =>
-    item.name === filteredMaintenanceItem.name
+    item.name === filteredMaintenanceItem?.name
       ? {
           ...filteredMaintenanceItem,
           historyLog: [...filteredMaintenanceItem.historyLog],
@@ -351,7 +352,8 @@ export async function updateChangeEvery(
     .eq("carId", carId)
     .select("Maintenance");
 
-  const MaintenanceItems: MaintenanceItem[] = Maintenance?.at(0).Maintenance;
+  const MaintenanceItems: MaintenanceItem[] =
+    Maintenance?.at(0)?.Maintenance ?? [];
 
   const filteredMaintenanceItem = MaintenanceItems.filter(
     //this is every Maintenance Item like Brake Pads  object etc...
@@ -359,7 +361,7 @@ export async function updateChangeEvery(
   ).at(0);
   //update the changeEvery value of the filteredMaintenanceItem
   const finalData = MaintenanceItems.map((item: MaintenanceItem) =>
-    item.name === filteredMaintenanceItem.name
+    item.name === filteredMaintenanceItem?.name
       ? {
           ...filteredMaintenanceItem,
           changeEvery: newChangeEveryValue,
@@ -387,7 +389,7 @@ export async function updateChangeEvery(
 
 export async function updateKiloMetrage(newKilometrage: number, carId: string) {
   const supabase = await createClerkSupabaseClient();
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from("cars")
     .update({
       currentKilometrage: newKilometrage,
@@ -411,7 +413,8 @@ export async function getLatestMaintenance(
     .select("Maintenance")
     .eq("carId", carId);
 
-  const MaintenanceItems: MaintenanceItem[] = Maintenance?.at(0).Maintenance;
+  const MaintenanceItems: MaintenanceItem[] =
+    Maintenance?.at(0)?.Maintenance ?? [];
 
   const filteredMaintenanceItem = MaintenanceItems.filter(
     (item: MaintenanceItem) => item.name === maintenanceName
@@ -423,7 +426,7 @@ export async function getLatestMaintenance(
   )
     return null;
 
-  const latestMaintenance = filteredMaintenanceItem.historyLog.at(-1);
+  const latestMaintenance = filteredMaintenanceItem?.historyLog?.at(-1);
 
   return latestMaintenance;
 }

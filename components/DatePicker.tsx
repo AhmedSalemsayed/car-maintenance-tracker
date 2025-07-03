@@ -31,7 +31,7 @@ export default function DatePicker({
             <Button
               variant={"outline"}
               className={cn(
-                " pl-3 text-left font-normal w-full",
+                " pl-3 text-left font-normal w-full ",
                 !field.value && "text-muted-foreground"
               )}
             >
@@ -52,6 +52,11 @@ export default function DatePicker({
             onSelect={field.onChange}
             disabled={(date) =>
               date > new Date() || date < new Date("1900-01-01")
+            }
+            footer={
+              field.value
+                ? `Selected: ${new Date(field.value).toLocaleDateString()}`
+                : "Pick a day."
             }
           />
         </PopoverContent>

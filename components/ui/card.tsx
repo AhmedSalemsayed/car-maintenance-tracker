@@ -1,17 +1,11 @@
 import * as React from "react";
-import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
 
 const Card = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-  <motion.div
-    initial={{ scale: 0.1 }}
-    animate={{ scale: 1 }}
-    exit={{ scale: 0.1, opacity: 0 }}
-    transition={{ duration: 0.4 }}
-    layout
+  <div
     ref={ref}
     className={cn(
       "rounded-xl border bg-card text-card-foreground shadow",

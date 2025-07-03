@@ -11,7 +11,13 @@ import {
 import { IoFilter } from "react-icons/io5";
 import { Button } from "./ui/button";
 import { useState } from "react";
-export default function TableFilter({ table }) {
+import { Table } from "@tanstack/react-table";
+import { MaintenanceItem } from "@/lib/zodSchemas";
+export default function TableFilter({
+  table,
+}: {
+  table: Table<MaintenanceItem>;
+}) {
   const [position, setPosition] = useState("bottom");
   return (
     <DropdownMenu>

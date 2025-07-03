@@ -7,7 +7,11 @@ import CustomFormField from "./CustomFormField";
 import SubmitButton from "./SubmitButton";
 import { toast } from "sonner";
 
-export default function AddNewCarForm({ setOpen }) {
+export default function AddNewCarForm({
+  setOpen,
+}: {
+  setOpen: (value: boolean) => void;
+}) {
   const form = useForm<NewCarType>({
     resolver: zodResolver(newCarSchema),
     defaultValues: {

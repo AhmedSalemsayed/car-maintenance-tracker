@@ -3,7 +3,7 @@ import { Luckiest_Guy, Roboto } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 
-export const LuckiestGuy = Luckiest_Guy({
+const LuckiestGuy = Luckiest_Guy({
   variable: "--font-luckiest-guy",
   subsets: ["latin"],
   weight: "400",
