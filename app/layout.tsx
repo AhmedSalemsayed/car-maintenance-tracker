@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Luckiest_Guy, Roboto } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
-
+import { Analytics } from "@vercel/analytics/next";
 const LuckiestGuy = Luckiest_Guy({
   variable: "--font-luckiest-guy",
   subsets: ["latin"],
@@ -29,9 +29,10 @@ export default function RootLayout({
       <ClerkProvider>
         <body
           className={`${roboto.variable} ${LuckiestGuy.variable} antialiased max-w-[1440px] m-auto selection:bg-purple-500 min-h-svh
-`}
+          `}
         >
           {children}
+          <Analytics />
         </body>
       </ClerkProvider>
     </html>
