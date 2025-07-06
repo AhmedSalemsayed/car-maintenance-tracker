@@ -11,7 +11,9 @@ export const newCarSchema = z.object({
     .min(4, { message: "Must Be at least 4 character long" })
     .max(4, { message: "Must Be at most 4 character long" }),
   color: z.string().min(1, { message: "Must Be at least 1 character long" }),
-  currentKilometrage: z.number().int().positive(),
+  currentKilometrage: z
+    .string()
+    .min(1, { message: "Must Be at least 1 character long" }),
   Maintenance: any(),
   carImage: any(),
 });

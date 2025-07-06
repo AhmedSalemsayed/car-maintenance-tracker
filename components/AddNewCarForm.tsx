@@ -21,7 +21,7 @@ export default function AddNewCarForm({
       model: "",
       year: "",
       carImage: "",
-      currentKilometrage: 0,
+      currentKilometrage: "",
     },
   });
 
@@ -35,7 +35,7 @@ export default function AddNewCarForm({
   return (
     <Form {...form}>
       <form
-        className={`space-y-2 w-full`}
+        className={`space-y-2 w-full overflow-auto`}
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <FormField
