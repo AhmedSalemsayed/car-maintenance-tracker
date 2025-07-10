@@ -12,15 +12,16 @@ export default function CarInfo({ car }: { car: car }) {
   if (!car) return;
   return (
     <div className="flex gap-4 md:gap-8 mt-1">
-      <Image
-        src={car?.carImage}
-        alt="car image"
-        width={100}
-        height={100}
-        className={`rounded-lg object-fill w-24 h-24 md:w-40 md:h-36 invert-[0.15] ${
-          isDefaultImage && "dark:invert-[0.5]"
-        }`}
-      />
+      <div className="relative w-28 h-28 md:w-36 md:h-36  ">
+        <Image
+          src={car?.carImage}
+          alt="car image"
+          fill
+          className={`rounded-full lg:rounded-lg invert-[0.15] ${
+            isDefaultImage && "dark:invert-[0.5]"
+          }`}
+        />
+      </div>
       <div className="flex flex-1 gap-4 ">
         <div className="flex flex-col gap-1 md:gap-3 p-2">
           <h2 className="text-lg font-semibold md:text-2xl">{car?.brand}</h2>

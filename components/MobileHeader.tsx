@@ -4,16 +4,17 @@ import Image from "next/image";
 import DarkModeBtn from "./DarkModeBtn";
 export default function MobileHeader() {
   return (
-    <header className="bg-white md:hidden flex px-4 py-1 justify-between dark:bg-[#1e1e1e]">
-      <Image
-        src="/logo.png"
-        alt="logo"
-        width={30}
-        height={30}
-        className="dark:invert dark:brightness-200"
-      />
+    <header className="bg-white md:hidden flex px-4 py-1 justify-between items-center dark:bg-[#1e1e1e]">
+      <div className="h-7 w-7 relative flex items-center justify-center">
+        <Image
+          src="/logo.png"
+          alt="logo"
+          fill
+          className="dark:invert dark:brightness-200"
+        />
+      </div>
       <span
-        className={`text-center text-2xl flex justify-center items-center mt-1 ml-7 font-LuckiestGuy`}
+        className={`text-center text-2xl flex justify-center items-center  ml-7 font-LuckiestGuy`}
       >
         RoboCar
       </span>
