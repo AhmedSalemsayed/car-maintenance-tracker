@@ -56,10 +56,9 @@ export default function NavLink({
               }  hover:text-white hover:font-bold transition-all`}
             >
               <span className="ml-1">{icon}</span>
-              <span className="tracking-wider">{title}</span>
             </Link>
           </TooltipTrigger>
-          <TooltipContent className="relative left-[100%] top-9 font-Roboto">
+          <TooltipContent className="relative left-12 top-9 font-Roboto">
             {title}
           </TooltipContent>
         </Tooltip>

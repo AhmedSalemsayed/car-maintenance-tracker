@@ -27,7 +27,7 @@ export async function AppSidebar() {
 
       <SidebarContent className="flex flex-col justify-start pt-4">
         <TooltipProvider>
-          <NavLink icon={<Home />} title="Home" href="/" exact={true} />
+          <NavLink icon={<Home />} title="Dashboard" href="/" exact={true} />
           <NavLink icon={<Car />} title="Cars" href="/cars" />
         </TooltipProvider>
       </SidebarContent>
