@@ -12,7 +12,7 @@ import NavLink from "./NavLink";
 import { TooltipProvider } from "./ui/tooltip";
 
 export function AppSidebar() {
-  const { state } = useSidebar();
+  const { state, isMobile } = useSidebar();
   return (
     <Sidebar variant="sidebar" collapsible="icon" className="bg-white">
       <SidebarHeader className="flex flex-row gap-2 items-center overflow-hidden pt-[15px]">
@@ -25,6 +25,11 @@ export function AppSidebar() {
           />
         </div>
         {state === "expanded" && (
+          <span className="font-LuckiestGuy pointer-events-none dark:text-white tracking-wide text-black text-2xl md:text-2xl ml-3 md:ml-3">
+            RoboCar
+          </span>
+        )}
+        {isMobile && (
           <span className="font-LuckiestGuy pointer-events-none dark:text-white tracking-wide text-black text-2xl md:text-2xl ml-3 md:ml-3">
             RoboCar
           </span>
