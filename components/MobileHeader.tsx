@@ -9,7 +9,7 @@ export default function MobileHeader() {
         src="/logo.png"
         alt="logo"
         width={30}
-        height={25}
+        height={30}
         className="dark:invert dark:brightness-200"
       />
       <span

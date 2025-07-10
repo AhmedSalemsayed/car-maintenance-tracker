@@ -57,7 +57,7 @@ export default function AddNewCar() {
           <span>Add A New Car</span>
         </Button>
       </DrawerTrigger>
-      <DrawerContent>
+      <DrawerContent className="overflow-auto">
         <DrawerHeader className="text-left">
           <DrawerTitle>Add A New Car</DrawerTitle>
           <DrawerDescription>

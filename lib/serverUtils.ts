@@ -5,6 +5,7 @@ import { MaintenanceItem, NewCarType } from "@/lib/zodSchemas";
 
 export async function HandleAddNewCar(formData: NewCarType) {
   const { carImage } = formData;
+  const isNoImage = carImage === "";
   const carImageName = carImage?.at(0)?.name;
   const carImageFile = carImage?.at(0);
   const uploadedImageName = `${Math.random()}-${carImageName}`.replaceAll(
@@ -14,7 +15,9 @@ export async function HandleAddNewCar(formData: NewCarType) {
   const supabase = await createClerkSupabaseClient();
 
   // change the newcar carImage property to the uploaded image URL to be provided to the image element src attribute in carCard component
-  formData.carImage = `https://rrdowjxummyrbbamenzq.supabase.co/storage/v1/object/public/car-images/${uploadedImageName}`;
+  formData.carImage = isNoImage
+    ? "https://rrdowjxummyrbbamenzq.supabase.co/storage/v1/object/public/car-images//DefaultCarImage.png"
+    : `https://rrdowjxummyrbbamenzq.supabase.co/storage/v1/object/public/car-images/${uploadedImageName}`;
   formData.Maintenance = [
     {
       name: "Brake Pads",
@@ -192,29 +195,28 @@ export async function HandleAddNewCar(formData: NewCarType) {
   }
 
   //upload car image to supabase storage bucket
+  if (!isNoImage) {
+    const { error: imageStorageError } = await supabase.storage
+      .from("car-images")
+      .upload(`${uploadedImageName}`, carImageFile as File);
+    if (imageStorageError) {
+      console.error("Error uploading image:", imageStorageError.message);
 
-  const { error: imageStorageError } = await supabase.storage
-    .from("car-images")
-    .upload(`${uploadedImageName}`, carImageFile as File);
+      // delete the newly added car in case of image upload error
 
-  if (imageStorageError) {
-    console.error("Error uploading image:", imageStorageError.message);
-
-    // delete the newly added car in case of image upload error
-
-    const { error: deleteError } = await supabase
-      .from("cars")
-      .delete()
-      .eq("carId", data.at(0).carId);
-    if (deleteError)
-      console.error(
-        "error deleting the car after carImage upload failure",
-        deleteError.message
-      );
-  } else {
-    console.log("Car image uploaded successfully");
+      const { error: deleteError } = await supabase
+        .from("cars")
+        .delete()
+        .eq("carId", data.at(0).carId);
+      if (deleteError)
+        console.error(
+          "error deleting the car after carImage upload failure",
+          deleteError.message
+        );
+    } else {
+      console.log("Car image uploaded successfully");
+    }
   }
-
   revalidatePath("/cars");
   return data;
 }

@@ -11,7 +11,7 @@ import { SlOptionsVertical } from "react-icons/sl";
 import { MdEdit, MdDelete } from "react-icons/md";
 import { AiFillEdit } from "react-icons/ai";
 import { IoMdAdd } from "react-icons/io";
-import { FaHistory } from "react-icons/fa";
+// import { FaHistory } from "react-icons/fa";
 
 import {
   Dialog,
@@ -60,13 +60,13 @@ export function ActionsDropDown({ rowData }: { rowData: rowData }) {
               Remove Last Maintenance
             </DropdownMenuItem>
 
-            <DropdownMenuItem
+            {/* <DropdownMenuItem
               className="disabled:cursor-not-allowed"
               onClick={() => setMode("viewHistory")}
             >
               <FaHistory />
               View History
-            </DropdownMenuItem>
+            </DropdownMenuItem> */}
             <DropdownMenuItem onClick={() => setMode("changeEvery")}>
               <AiFillEdit />
               Update Change Every
@@ -75,7 +75,7 @@ export function ActionsDropDown({ rowData }: { rowData: rowData }) {
         </DropdownMenuContent>
       </DropdownMenu>
       {/* **************************** */}
-      <DialogContent>
+      <DialogContent className="p-0 py-4">
         <DialogHeader>
           <DialogTitle>
             {mode === "edit" && `Edit Last ${rowData.name} Maintenance`}

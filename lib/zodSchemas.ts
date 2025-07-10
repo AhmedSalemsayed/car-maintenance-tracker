@@ -13,10 +13,11 @@ export const newCarSchema = z.object({
   color: z.string().min(1, { message: "Must Be at least 1 character long" }),
   currentKilometrage: z
     .string()
-    .min(1, { message: "Must Be at least 1 character long" }),
+    .regex(/^\d+$/, { message: "Must be a Number" }),
   Maintenance: any(),
   carImage: any(),
 });
+export type NewCarType = z.infer<typeof newCarSchema>;
 
 export const AddNewMaintenanceSchema = z.object({
   date: z.any(),
@@ -27,8 +28,6 @@ export const AddNewMaintenanceSchema = z.object({
 });
 
 export type AddNewMaintenance = z.infer<typeof AddNewMaintenanceSchema>;
-
-export type NewCarType = z.infer<typeof newCarSchema>;
 
 export type car = {
   carId: number;

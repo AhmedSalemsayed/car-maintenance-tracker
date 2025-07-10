@@ -30,13 +30,19 @@ const customFilterFn = (
   filterValue: string
 ) => {
   const kilometrageNextMaintenance =
-    row.original.historyLog.at(-1)?.kilometrageNextMaintenance ?? 0;
+    row.original.historyLog.at(-1)?.kilometrageNextMaintenance ?? 1;
   if (!filterValue) return false;
+  if (filterValue === "Unknown") {
+    return row.original.historyLog.length === 0;
+  }
   if (filterValue === "GoodStatus") {
     return kilometrageNextMaintenance - row.original.currentKilometrage > 1000;
   }
   if (filterValue === "BadStatus") {
-    return kilometrageNextMaintenance - row.original.currentKilometrage < 0;
+    return (
+      kilometrageNextMaintenance - row.original.currentKilometrage < 0 &&
+      row.original.historyLog.length !== 0
+    );
   }
   if (filterValue === "UpcomingStatus") {
     return (

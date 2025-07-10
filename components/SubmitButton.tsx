@@ -14,10 +14,10 @@ export default function SubmitButton({
         className="w-full btn-primary tracking-wide inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-lg font-Roboto font-normal transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:text-slate-900"
       >
         {isSubmitting ? (
-          <>
+          <div className="dark:text-white">
             <SpinnerMini />
             <span>Saving...</span>
-          </>
+          </div>
         ) : (
           "Save"
         )}

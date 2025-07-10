@@ -49,10 +49,10 @@ export default function UpdateKilometrage({
 
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
-      <PopoverTrigger className="btn-primary text-lg">
+      <PopoverTrigger className="btn-primary py-1 px-2 rounded-md text-sm md:text-lg">
         Update Kilometrage
       </PopoverTrigger>
-      <PopoverContent side="right">
+      <PopoverContent side="bottom">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <FormField

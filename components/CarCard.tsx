@@ -42,6 +42,9 @@ export default function CarCard({ className, car, ...props }: CardProps) {
   const [isDeleting, setIsDeleting] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const carImageName = car.carImage.split("/").at(-1);
+  const isDefaultImage =
+    car?.carImage ===
+    "https://rrdowjxummyrbbamenzq.supabase.co/storage/v1/object/public/car-images//DefaultCarImage.png";
 
   const handleDelete = async (e: React.MouseEvent) => {
     e.preventDefault(); // to prevent radix from closing the dialog before the async operation completes
@@ -64,7 +67,9 @@ export default function CarCard({ className, car, ...props }: CardProps) {
           fill
           priority={true}
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          className="object-cover rounded-xl  hover:scale-105 transition-transform duration-300"
+          className={`object-cover rounded-xl  hover:scale-105 transition-transform duration-300 ${
+            isDefaultImage && "dark:invert-[0.5]"
+          }`}
         />
       </div>
       <CardHeader>

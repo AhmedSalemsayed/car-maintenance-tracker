@@ -30,17 +30,27 @@ export default function TableFilter({
           Filter
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-30">
+      <DropdownMenuContent className="w-30 overflow-auto ">
         <DropdownMenuLabel className="tracking-wide ">
           Filter by...
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuRadioGroup value={position} onValueChange={setPosition}>
+        <DropdownMenuRadioGroup
+          className="overflow-auto max-h-72"
+          value={position}
+          onValueChange={setPosition}
+        >
           <DropdownMenuRadioItem
             value=""
             onSelect={() => table.setGlobalFilter("")}
           >
             None
+          </DropdownMenuRadioItem>
+          <DropdownMenuRadioItem
+            value="Unknown"
+            onSelect={() => table.setGlobalFilter("Unknown")}
+          >
+            Unknown
           </DropdownMenuRadioItem>
           <DropdownMenuRadioItem
             value="GoodStatus"

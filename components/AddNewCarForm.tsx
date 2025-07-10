@@ -1,3 +1,4 @@
+"use client";
 import { useForm } from "react-hook-form";
 import { HandleAddNewCar } from "@/lib/serverUtils";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -6,6 +7,7 @@ import { Form, FormField } from "./ui/form";
 import CustomFormField from "./CustomFormField";
 import SubmitButton from "./SubmitButton";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export default function AddNewCarForm({
   setOpen,
@@ -24,10 +26,11 @@ export default function AddNewCarForm({
       currentKilometrage: "",
     },
   });
-
+  const router = useRouter();
   const onSubmit = async (data: NewCarType) => {
-    await HandleAddNewCar(data);
+    const carData = await HandleAddNewCar(data);
     setOpen(false);
+    router.push(`/cars/${carData?.at(0).carId ?? ""}`);
     toast.success("Car added successfully!", {
       description: "Your car has been added to the list.",
     });
@@ -35,7 +38,7 @@ export default function AddNewCarForm({
   return (
     <Form {...form}>
       <form
-        className={`space-y-2 w-full overflow-auto`}
+        className={`space-y-2 w-full `}
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <FormField
@@ -102,7 +105,6 @@ export default function AddNewCarForm({
               field={field}
               label="Current Kilometrage"
               placeholder="Your Car Current Kilometrage"
-              type="number"
             />
           )}
         />

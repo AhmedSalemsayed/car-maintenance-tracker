@@ -23,7 +23,7 @@ export default function DatePicker({
   field: ControllerRenderProps<AddNewMaintenance, "date">;
 }) {
   return (
-    <FormItem className="flex flex-col w-full">
+    <FormItem className="flex flex-col w-full px-4 lg:px-0 lg:text-xs">
       <FormLabel>Date of Maintenance</FormLabel>
       <Popover>
         <PopoverTrigger asChild>
@@ -31,7 +31,7 @@ export default function DatePicker({
             <Button
               variant={"outline"}
               className={cn(
-                " pl-3 text-left font-normal w-full ",
+                " pl-3 text-left font-normal w-full mt-1 ",
                 !field.value && "text-muted-foreground"
               )}
             >

@@ -6,7 +6,9 @@ import UpdateKilometrage from "./UpdateKilometrage";
 import { useState } from "react";
 export default function CarInfo({ car }: { car: car }) {
   const [isOpen, setIsOpen] = useState(false);
-
+  const isDefaultImage =
+    car?.carImage ===
+    "https://rrdowjxummyrbbamenzq.supabase.co/storage/v1/object/public/car-images//DefaultCarImage.png";
   if (!car) return;
   return (
     <div className="flex gap-4 md:gap-8 mt-1">
@@ -15,7 +17,9 @@ export default function CarInfo({ car }: { car: car }) {
         alt="car image"
         width={100}
         height={100}
-        className="rounded-lg object-fill w-24 h-24 md:w-48 md:h-36"
+        className={`rounded-lg object-fill w-24 h-24 md:w-40 md:h-36 invert-[0.15] ${
+          isDefaultImage && "dark:invert-[0.5]"
+        }`}
       />
       <div className="flex flex-1 gap-4 ">
         <div className="flex flex-col gap-1 md:gap-3 p-2">
