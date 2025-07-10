@@ -227,8 +227,9 @@ export async function deleteCar(carId: number, imageName: string) {
     .from("cars")
     .delete()
     .eq("carId", carId);
-
-  await supabase.storage.from("car-images").remove([`${imageName}`]);
+  if (imageName !== "DefaultCarImage.png") {
+    await supabase.storage.from("car-images").remove([`${imageName}`]);
+  }
 
   if (deleteError) console.error("error deleting the car", deleteError.message);
   revalidatePath("/cars");

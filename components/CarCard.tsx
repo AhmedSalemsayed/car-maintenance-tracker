@@ -41,10 +41,13 @@ type CardProps = React.ComponentProps<typeof Card> & {
 export default function CarCard({ className, car, ...props }: CardProps) {
   const [isDeleting, setIsDeleting] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const carImageName = car.carImage.split("/").at(-1);
   const isDefaultImage =
     car?.carImage ===
     "https://rrdowjxummyrbbamenzq.supabase.co/storage/v1/object/public/car-images//DefaultCarImage.png";
+
+  const carImageName = isDefaultImage
+    ? "DefaultCarImage.png"
+    : car.carImage.split("/").at(-1);
 
   const handleDelete = async (e: React.MouseEvent) => {
     e.preventDefault(); // to prevent radix from closing the dialog before the async operation completes
