@@ -25,7 +25,7 @@ export default function DatePicker({
   return (
     <FormItem className="flex flex-col w-full px-4 lg:px-0 lg:text-xs">
       <FormLabel>Date of Maintenance</FormLabel>
-      <Popover>
+      <Popover modal={false}>
         <PopoverTrigger asChild>
           <FormControl>
             <Button

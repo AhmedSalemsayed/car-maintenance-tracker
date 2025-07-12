@@ -124,7 +124,7 @@ export default function DataTable({
             <TableRow>
               <TableCell
                 colSpan={columns.length}
-                className="h-72 text-center font-semibold text-lg  dark:bg-[#2d2d2d] dark:text-[#b4b2b2]"
+                className="h-72 text-center font-semibold text-lg md:h-[900px] lg:h-[363px]  dark:bg-[#2d2d2d] dark:text-[#b4b2b2]"
               >
                 No results.
               </TableCell>

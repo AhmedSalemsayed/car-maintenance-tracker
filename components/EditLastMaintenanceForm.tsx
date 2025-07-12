@@ -47,7 +47,13 @@ export default function EditLastMaintenanceForm({
   }, [KmAfterMaintenance, form]);
 
   if (isLoading) return <SkeletonForm />;
-
+  if (!rowData.historyLog || rowData.historyLog.length === 0) {
+    return (
+      <div className="text-red-500 text-center">
+        No Maintenance Data Available To Edit
+      </div>
+    );
+  }
   async function onSubmit(values: AddNewMaintenance) {
     const newMaintenance = {
       ...values,

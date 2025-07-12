@@ -65,7 +65,7 @@ export default async function Home() {
     ]
   );
   return (
-    <section className="w-full p-4 md:pt-0  flex flex-col gap-1 transition-all duration-500">
+    <section className="w-full p-4 md:pt-0  flex flex-col gap-1 flex-1 transition-all duration-500">
       <motion.div
         className="flex flex-col gap-0 mb-2 mt-2"
         initial={{ opacity: 0, scale: 0 }}

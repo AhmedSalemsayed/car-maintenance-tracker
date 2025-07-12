@@ -20,9 +20,9 @@ export default async function page() {
       <div className="flex  flex-1 gap-4 justify-center items-center flex-wrap transition-all duration-500">
         {data?.length === 0 ? (
           <div className="flex flex-col gap-4 justify-center items-center">
-            <h1 className="lg:text-6xl">
+            <h1 className="text-3xl md:text-5xl lg:text-6xl">
               Welcome To
-              <span className="bg-[url(../public/needle-underline.png)] font-LuckiestGuy ml-2 bg-no-repeat  bg-bottom ">
+              <span className="bg-[url(../public/needle-underline.png)] font-LuckiestGuy ml-2 bg-no-repeat bg-[0%_135%] md:bg-bottom ">
                 RoboCar
               </span>
             </h1>

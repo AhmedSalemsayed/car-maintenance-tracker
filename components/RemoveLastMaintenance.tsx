@@ -18,13 +18,20 @@ export default function RemoveLastMaintenance({
 }: RemoveLastMaintenanceProps) {
   const { carId }: { carId: string } = useParams();
   const [isDisabled, setIsDisabled] = useState(false);
+  if (!rowData.historyLog || rowData.historyLog.length === 0) {
+    return (
+      <div className="text-red-500 text-center">
+        No Maintenance Data Available To Delete
+      </div>
+    );
+  }
   return (
     <>
-      <h6 className="text-sm text-muted-foreground">
+      <h6 className="text-sm text-muted-foreground px-4">
         This action cannot be undone. This will permanently delete the last
         maintenance record and remove it from your history.
       </h6>
-      <div className="flex justify-end gap-2">
+      <div className="flex justify-end gap-2 px-4">
         <Button
           className="bg-muted text-muted-foreground hover:bg-slate-200"
           onClick={() => setOpen(false)}
