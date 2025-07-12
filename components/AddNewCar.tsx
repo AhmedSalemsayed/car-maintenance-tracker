@@ -21,11 +21,34 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import AddNewCarForm from "./AddNewCarForm";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function AddNewCar() {
   const [open, setOpen] = useState(false);
   const isDesktop = useMediaQuery("(min-width: 768px)");
+  const formContainerRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (formContainerRef.current) {
+        formContainerRef.current.style.setProperty(
+          "bottom",
+          `env(safe-area-inset-bottom)`
+        );
+      }
+    };
+
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener("resize", handleResize);
+      handleResize(); // Initial call in case the keyboard is already open
+    }
+
+    return () => {
+      if (window.visualViewport) {
+        window.visualViewport.removeEventListener("resize", handleResize);
+      }
+    };
+  }, []);
 
   if (isDesktop) {
     return (
@@ -36,8 +59,8 @@ export default function AddNewCar() {
             <span>Add A New Car</span>
           </Button>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
+        <DialogContent className="sm:max-w-[425px] p-0 py-4">
+          <DialogHeader className="px-4">
             <DialogTitle>Add A New Car</DialogTitle>
             <DialogDescription>
               Add Car Details here. Click save when you&apos;re done.
@@ -57,7 +80,10 @@ export default function AddNewCar() {
           <span>Add A New Car</span>
         </Button>
       </DrawerTrigger>
-      <DrawerContent className="overflow-auto">
+      <DrawerContent
+        className="overflow-auto min-h-[70vh]"
+        ref={formContainerRef}
+      >
         <DrawerHeader className="text-left">
           <DrawerTitle>Add A New Car</DrawerTitle>
           <DrawerDescription>

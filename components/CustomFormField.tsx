@@ -24,7 +24,7 @@ export default function CustomFormField<T extends FieldValues>({
   const isFileInput = type === "file";
   const isDisabled = label === "Kilometrage of  Next Maintenance";
   return (
-    <FormItem className="lg:text-xs px-4 lg:px-0">
+    <FormItem className="lg:text-xs px-4 ">
       <FormLabel>{label}</FormLabel>
       <FormControl>
         <Input

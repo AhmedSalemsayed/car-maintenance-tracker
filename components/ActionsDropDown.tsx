@@ -75,9 +75,9 @@ export function ActionsDropDown({ rowData }: { rowData: rowData }) {
         </DropdownMenuContent>
       </DropdownMenu>
       {/* **************************** */}
-      <DialogContent className="p-0 py-4">
+      <DialogContent className="p-0 py-4 max-w-[350px] sm:max-w-lg rounded-lg">
         <DialogHeader className="px-4">
-          <DialogTitle>
+          <DialogTitle className="text-base sm:text-lg">
             {mode === "edit" && `Edit Last ${rowData.name} Maintenance`}
             {mode === "add" && `Add New ${rowData.name} Maintenance`}
             {mode === "remove" && `Remove Last ${rowData.name} Maintenance`}
